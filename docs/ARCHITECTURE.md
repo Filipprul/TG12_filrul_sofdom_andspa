@@ -283,3 +283,68 @@ graph LR
     v20 -->|Option 2| v32
     v20 -->|Option 3| v33
 ```
+
+## Ordnerstruktur
+
+```mermaid
+graph TD
+    %% Hauptverzeichnis
+    Root[TG12_FILRUL_SOFDOM_ANDSPA]
+    
+    %% Erste Ebene
+    Docs[docs]
+    Res[resources]
+    Src[src]
+    Gitignore[.gitignore]
+    Readme[README.md]
+    
+    Root --> Docs
+    Root --> Res
+    Root --> Src
+    Root --> Gitignore
+    Root --> Readme
+    Root --> LICENSE
+
+    %% Docs Ebene
+    Docs --> Arch[ARCHITECTURE.md]
+    Docs --> Req[REQUIREMENTS.md]
+    Docs --> Mgmt[MANAGEMENT.md]
+
+    %% Resources Ebene
+    Res --> Audio[audio]
+    Res --> Img[images]
+
+    %% Src Ebene
+    Src --> Main[Main.java]
+    Src --> Game[game]
+    Src --> Menu[menu]
+    Src --> View[view]
+
+    %% Game Unterordner
+    Game --> Core[core]
+    Game --> Obj[objects]
+
+    %% Core Klassen
+    Core --> GC[GameController.java]
+    Core --> Grid[Grid.java]
+
+    %% Objects Klassen
+    Obj --> BaseObj[Objekt.java]
+    Obj --> Head[Head.java]
+    Obj --> Body[Body.java]
+    Obj --> Food[Food.java]
+
+    %% Menu Klassen
+    Menu --> MenuClass[menu.java]
+
+    %% View Klassen
+    View --> ViewInt[GameView.java]
+    View --> TermView[TerminalView.java]
+    View --> FXView[JavaFXView.java]
+
+    %% Styling für die Übersicht
+    style Root fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff
+    style Src fill:#2196F3,stroke:#333,color:#fff
+    style Docs fill:#9C27B0,stroke:#333,color:#fff
+    style Res fill:#FF9800,stroke:#333,color:#fff
+```
