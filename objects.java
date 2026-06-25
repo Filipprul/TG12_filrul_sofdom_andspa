@@ -66,9 +66,9 @@ public class Body extends Objekt{ // Body of the snake and how it follows the he
    public Body(int x,int y, int value,previus_x,previus_y){
         super(x,y,value,previus_x,previus_y)
     }
-    public void follow(Objekt){
-        x = Objekt.get_previus_x;
-        y = Objekt.get_previus_y;
+    public void follow(Objekt objekt){
+        x = objekt.get_previus_x;
+        y = objekt.get_previus_y;
     }
 }
 
