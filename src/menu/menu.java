@@ -1,54 +1,51 @@
 package menu;
 
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-
+import java.util.Scanner;
 public class menu{
-    public Scene getMenuScene(Stage primaryStage){
-        VBox root = new VBox(25);
-        root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-background-color: #1a1a1a;");
+    private Scanner scanner;
 
-        Label titleLabel = new Label("Snake");
-        titleLabel.setFont(new Font("Arial", 48));
-        titleLabel.setStyle("-fx-text-fill: #4CAF50; -fx-font-weight: bold;");
+    public menu() {
+        scanner = new Scanner(System.in);
+    }
 
-        Button startButton = new Button("START");
-        Button exitButton = new Button("EXIT");
+    public void zeigeMenue() {
+        boolean laufend = true;
 
-        String buttonStyle = "-fx-background-color: #333333; " +
-        "-fx-text-fill: white; " +
-        "-fx-font-size: 16px; " +
-        "-fx-font-weight: bold; " +
-        "-fx-min-width: 200px; " +
-        "-fx-min-height: 45px; " +
-        "-fx-background-radius: 5px; " +
-        "-fx-cursor: hand; ";
+        while (laufend) {
+            System.out.println("==================================================");
+            System.out.println("   _____    _    _               _   _    ______ ");
+            System.out.println("  / ____|  | \\ | |     /\\     |  |/  / |  ____|");
+            System.out.println(" | (___ |  |  \\| |    /  \\    |  | /   | |____ ");
+            System.out.println("  \\___ \\ |      |   / /  \\   |   <    |  ____|");
+            System.out.println("  ____) |  | |\\  |  / ____ \\  |  | \\  | |____ ");
+            System.out.println(" |_____/   |_| \\_| /_/      \\ |\\|__\\ |______|");
+            System.out.println("==================================================");
+            System.out.println("[1] Spiel starten");
+            System.out.println("[2] Beenden");
+            System.out.println("==================================================");
 
-        startButton.setStyle(buttonStyle);
-        exitButton.setStyle(buttonStyle);
+            String eingabe = scanner.nextLine();
 
-        startButton.setOnMouseEntered(e -> startButton.setStyle(buttonStyle + "-fx-background-color: #4CAF50;"));
-        startButton.setOnMouseExited(e -> startButton.setStyle(buttonStyle));
+            switch (eingabe) {
+                case "1":
+                System.out.println("\n--- Spiel wird gestartet... ---");
+                starteSpiel();
+                break;
+                case "2":
+                System.out.println("\nSpiel wird beendet. Tschüss!");
+                laufend = false;
+                break;
+                default:
+                System.out.println("\nUngültige Eingabe. Bitte wähle 1 oder 2.");
+                break;
+            }
+        }
+    }
 
-        exitButton.setOnMouseEntered(e -> exitButton.setStyle(buttonStyle + "-fx-background-color: #f44336;"));
-        exitButton.setOnMouseExited(e -> exitButton.setStyle(buttonStyle));
-
-        startButton.setOnAction(e -> {
-            System.out.println("Spiel startet...");
-        })
-
-        exitButton.setOnAction(e -> {
-            primaryStage.close();
-        })
-
-        root.getChildren().addAll(titleLabel, startButton, exitButton);
-
-        retunr new Scene(root, 800, 600);
+    private void starteSpiel() {
+        // Hier wird die Brücke zu Andys Core geschlagen
+        core.Grid grid = new core.Grid();
+        core.GameController controller = new core.GameController(grid);
+        controller.start();
     }
 }
