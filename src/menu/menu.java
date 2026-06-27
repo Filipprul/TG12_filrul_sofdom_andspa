@@ -16,7 +16,7 @@ public class menu{
 
         while (laufend) {
             System.out.println("==================================================");
-            System.out.println("   _____    _    _               _   _    ______ ");
+            System.out.println("   _____    _    _       _       _   _    ______ ");
             System.out.println("  / ____|  | \\ | |     /\\     |  |/  / |  ____|");
             System.out.println(" | (___ |  |  \\| |    /  \\    |  | /   | |____ ");
             System.out.println("  \\___ \\ |      |   / /  \\   |   <    |  ____|");
