@@ -1,6 +1,9 @@
 package menu;
 
+import core.GameController;
+import core.Grid;
 import java.util.Scanner;
+
 public class menu{
     private Scanner scanner;
 
@@ -43,9 +46,8 @@ public class menu{
     }
 
     private void starteSpiel() {
-        // Hier wird die Brücke zu Andys Core geschlagen
-        core.Grid grid = new core.Grid();
-        core.GameController controller = new core.GameController(grid);
+        Grid grid = new Grid();
+        GameController controller = new GameController(grid);
         controller.start();
     }
 }

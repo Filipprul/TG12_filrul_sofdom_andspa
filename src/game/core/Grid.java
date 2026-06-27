@@ -1,6 +1,5 @@
 package core;
-import objects;
-import game.objects.Objekt;
+import objects.*;
 
 import java.util.ArrayList;
 
