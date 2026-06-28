@@ -19,5 +19,5 @@ public class Player{
     public int getHighscore() {return highscore;}
 
     public void setPasswort(String passwort) {this.passwort = passwort;}
-    public void sethighscore(int highscore) {this.highscore = highscore;}
+    public void setHighscore(int highscore) {this.highscore = highscore;}
 }

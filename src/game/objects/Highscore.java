@@ -5,9 +5,9 @@ public class Highscore {
     private final int currentScore;
     private final String date;
 
-    public Highscore(Player player) {
+    public Highscore(Player player, int score) {
         this.currentPlayer = player;
-        this.currentScore = 0;
+        this.currentScore = score;
         this.date = new java.util.Date().toString();
     }
 
