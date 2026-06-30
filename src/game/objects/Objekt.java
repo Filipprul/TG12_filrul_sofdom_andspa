@@ -11,30 +11,42 @@ public class Objekt {
         this.x = x;
         this.y = y;
         this.value = value;
-        previus_x = x; // }
-        previus_y = y; // }dont know if this works
-
+        this.previus_x = x;
+        this.previus_y = y;
     }
+
     public int get_value(){
         return value;
     }
+
     public int get_x(){
         return x;
     }
+
     public int get_y(){
         return y;
     }
+
     public int get_previus_y(){
         return previus_y;
     }
+
     public int get_previus_x(){
         return previus_x;
     }
+
     public void set_x(int x){
+        this.previus_x = this.x;
         this.x = x;
     }
+
     public void set_y(int y){
+        this.previus_y = this.y;
         this.y = y;
     }
-    
+
+    public void updatePreviousPosition(){
+        this.previus_x = this.x;
+        this.previus_y = this.y;
+    }
 }
