@@ -1,13 +1,13 @@
 package core;
 import objects.*;
-import game.objects.Objekt;
+import objects.Obj;
 
 import java.util.ArrayList;
 
 public class Grid {
 
     private static final int GRID_SIZE = 16;
-    private final ArrayList<Objekt> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
+    private final ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
     private final int[][] grid_size = new int[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
     private Direction direction = Direction.RIGHT;
 
@@ -64,13 +64,13 @@ public class Grid {
         if (Snake.isEmpty()) {
             return;
         }
-        Objekt head = Snake.get(0);
+        Obj head = Snake.get(0);
         if (head instanceof Head) {
             ((Head) head).move(direction);
         }
         for (int j = 1; j < Snake.size(); j++) {
-            Objekt current = Snake.get(j);
-            Objekt previous = Snake.get(j - 1);
+            Obj current = Snake.get(j);
+            Obj previous = Snake.get(j - 1);
             if (current instanceof Body) {
                 ((Body) current).follow(previous);
             }

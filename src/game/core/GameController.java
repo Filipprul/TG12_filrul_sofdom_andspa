@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Locale;
+import java.util.Scanner;
 public class GameController {
     private final Grid grid; // Speicherung Spielfeld
     private boolean running = false;
@@ -46,5 +48,40 @@ public class GameController {
 
     private void render() {
         // später: Spielfeld anzeigen / View aktualisieren
+    }
+
+    // Steuerung
+    public void steuerung () {
+        String eingabe = "";
+
+        System.out.println("Steuerung: W = Hoch, S = Runter, A = Links, D = Rechts, Q = Beenden");
+
+        try (Scanner scanner = new Scanner(System.in).useLocale(Locale.US)) {
+            while (!eingabe.equals("q")) {
+                System.out.print(">");
+                eingabe = scanner.nextLine();
+
+                switch (eingabe.toLowerCase()) {
+                    case "w":
+                        grid.setDirection(Direction.UP);
+                        break;
+                    case "s":
+                        grid.setDirection(Direction.DOWN);
+                        break;
+                    case "a":
+                        grid.setDirection(Direction.LEFT);
+                        break;
+                    case "d":
+                        grid.setDirection(Direction.RIGHT);
+                        break;
+                    case "q":
+                        stop();
+                        System.out.println("Spiel beendet.");
+                        break;
+                    default:
+                        System.out.println("Ungültige Eingabe. Bitte W, S, A, D oder Q verwenden.");
+                }
+            }
+        }
     }
 }

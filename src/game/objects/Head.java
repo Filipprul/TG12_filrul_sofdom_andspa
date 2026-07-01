@@ -2,7 +2,7 @@ package objects;
 
 import core.Direction;
 
-public class Head extends Objekt{  // Head of the snake and its movement 
+public class Head extends Obj{  // Head of the snake and its movement 
     public Head(int x, int y, int value){
         super(x, y, value);
     }
