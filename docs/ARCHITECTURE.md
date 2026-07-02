@@ -47,8 +47,11 @@ classDiagram
     %% Kernlogik und Verwaltung (game.core)
     class Grid {
         -ArrayList~Objekt~ snake
-        -int[][] grid_size
-        -Food currentFood
+        -Obj[][] grid_size
+        -food_index
+        -max_food
+        +check_collision
+
         +spawn_snake() void
         +spawn_food() void
         +snake_grow() void
