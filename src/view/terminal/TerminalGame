@@ -1,0 +1,12 @@
+package view.terminal;
+
+import core.Grid;
+import java.util.Scanner;
+
+public class TerminalGame {
+PRIVATE Grid grid;
+  public TerminalGame(Grid grid) {
+    this.grid = grid;
+  }
+  grid.zeicheGrid();
+}
