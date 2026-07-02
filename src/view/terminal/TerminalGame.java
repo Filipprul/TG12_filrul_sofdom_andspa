@@ -6,6 +6,6 @@ public class TerminalGame {
   private Grid grid;
   public TerminalGame(Grid grid) {
     this.grid = grid;
-    this.grid.zeicheGrid();
+    this.grid.zeichneGrid();
   }
 }
