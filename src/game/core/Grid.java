@@ -1,26 +1,44 @@
 package core;
 import objects.*;
-<<<<<<< Updated upstream
+import java.util.Random;
 import objects.Obj;
-=======
-import objects.Objekt;
->>>>>>> Stashed changes
-
 import java.util.ArrayList;
 
 public class Grid {
 
-    private static final int GRID_SIZE = 16;
-    private final ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
-    private final int[][] grid_size = new int[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
+    private static final int GRID_SIZE = 18;
+    private ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
+    private final Obj[][] grid_size = new Obj[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
     private Direction direction = Direction.RIGHT;
+    private int food_index = 0;
+    private int max_food = 3;
 
     public Grid (){
         spawn_snake();
     }
 
-    public boolean isInsideGrid(int x, int y) {
-        return x >= 0 && x < grid_size.length && y >= 0 && y < grid_size[0].length;
+    public boolean chek_colision(){
+        boolean colision = false;
+        for(int i = 1; i< Snake.size();i++){
+            if (Snake.get(0).get_x() == Snake.get(i).get_x()){
+                colision = true;
+            }else if (Snake.get(0).get_y() > grid_size.length || Snake.get(0).get_previus_x() > grid_size[0].length){
+                colision = true;
+            }else {
+                colision = false;
+            }
+        }
+        return colision;
+    }
+
+    public void eat_food(){
+        int x = Snake.get(0).get_x();
+        int y = Snake.get(0).get_y();
+        if (grid_size[y][x].get_value() == 1){
+            grid_size[y][x] = null;
+            food_index --;
+            snake_grow();
+        }
     }
 
     public void spawn_snake(){
@@ -29,8 +47,26 @@ public class Grid {
         Snake.add(new Body(7, 8, 1));
     }
 
-    public void spawn_food(){} // random spawn food on board funktion Not done yet
-    public void snake_grow(){} // grow body of snake funktion Not done yet
+    public void spawn_food(){ // randomly spawn a food obj on the grid
+        Random random = new Random();
+        if (food_index < max_food +1){
+            int x = random.nextInt(GRID_SIZE+1);
+            int y = random.nextInt(GRID_SIZE+1);
+            if(grid_size[y][x].get(Obj).get_value == 2 || grid_size[y][x].get(Obj).get_value == 1){
+                spawn_food();
+            }else {
+                grid_size[y][x] = new Food(x,y,2);
+                Food food = new Food(x,y,2);
+                food_index ++;
+            }
+        }
+    }
+
+    public void snake_grow(){ // add a Body to the end of a Snake
+        int y = Snake.get(Snake.size()-1).get_previus_y();
+        int x = Snake.get(Snake.size()-1).get_previus_x();
+        Snake.add(new Body(x, y, 1));
+    }
 
     public void setDirection(Direction direction){
         if (direction == null) {
@@ -81,5 +117,3 @@ public class Grid {
         }
     }
 }
-
-
