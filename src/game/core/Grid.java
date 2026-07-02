@@ -1,6 +1,10 @@
 package core;
 import objects.*;
+<<<<<<< Updated upstream
 import objects.Obj;
+=======
+import objects.Objekt;
+>>>>>>> Stashed changes
 
 import java.util.ArrayList;
 
