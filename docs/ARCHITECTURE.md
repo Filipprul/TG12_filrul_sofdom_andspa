@@ -70,6 +70,12 @@ classDiagram
         +main(String[] args) void
     }
 
+    class TerminalGame {
+        - grid : Grid
+        + TerminalGame(grid : Grid)
+        + zeicheGrid() : void
+    }
+
     Main --> menu : startet
     menu ..> Grid : ruft auf (Zukunft)
 ```
