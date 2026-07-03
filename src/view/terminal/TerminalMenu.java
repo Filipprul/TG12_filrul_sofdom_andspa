@@ -3,12 +3,15 @@ package view.terminal;
 import core.GameController;
 import core.Grid;
 import java.util.Scanner;
+import objects.Player;
 
 public class TerminalMenu{
     private Scanner scanner;
+    private Player spieler;
 
-    public TerminalMenu() {
+    public TerminalMenu(Player spieler) {
         scanner = new Scanner(System.in);
+        this.spieler = spieler;
     }
 
     public void zeigeMenue() {
@@ -23,6 +26,8 @@ public class TerminalMenu{
             System.out.println("  ____) |  | |\\  |  / ____ \\  |  | \\  | |____ ");
             System.out.println(" |_____/   |_| \\_| /_/      \\ |\\|__\\ |______|");
             System.out.println("==================================================");
+            System.out.println("       Eingeloggt als : " + spieler.getUsername()   );
+            System.out.println("==================================================");
             System.out.println("[1] Spiel starten");
             System.out.println("[2] Beenden");
             System.out.println("==================================================");
@@ -31,22 +36,26 @@ public class TerminalMenu{
 
             switch (eingabe) {
                 case "1":
-                System.out.println("\n--- Spiel wird gestartet... ---");
-                starteSpiel();
-                break;
+                    System.out.println("\n Spiel wird gestartet...");
+                    starteSpiel();
+                    break;
                 case "2":
-                System.out.println("\nSpiel wird beendet. Tschüss!");
-                laufend = false;
-                break;
+                    System.out.println("\nSpiel wird beendet. Tschüss!");
+                    laufend = false;
+                    break;
                 default:
-                System.out.println("\nUngültige Eingabe. Bitte wähle 1 oder 2.");
-                break;
+                    System.out.println("\nUngültige Eingabe. Bitte wähle 1 oder 2.");
+                    break;
             }
         }
     }
 
     private void starteSpiel() {
         Grid grid = new Grid();
+
+        TerminalGame gameView = new TerminalGame(grid);
+        gameView.render();
+
         GameController controller = new GameController(grid);
         controller.start();
     }
