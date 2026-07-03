@@ -1,7 +1,6 @@
 package core;
 import objects.*;
 import java.util.Random;
-import objects.Obj;
 import java.util.ArrayList;
 
 public class Grid {
@@ -17,12 +16,14 @@ public class Grid {
         spawn_snake();
     }
 
-    public boolean chek_colision(){
+    public boolean chech_colision(){ // checks if the snake hits itsef or the void/border of the map
         boolean colision = false;
         for(int i = 1; i< Snake.size();i++){
             if (Snake.get(0).get_x() == Snake.get(i).get_x()){
                 colision = true;
-            }else if (Snake.get(0).get_y() > grid_size.length || Snake.get(0).get_previus_x() > grid_size[0].length){
+            }else if (Snake.get(0).get_y() > grid_size.length || Snake.get(0).get_previus_y() < grid_size.length){
+                colision = true;
+            }else if (Snake.get(0).get_x() > grid_size[0].length || Snake.get(0).get_previus_x() < grid_size[0].length){
                 colision = true;
             }else {
                 colision = false;
@@ -31,7 +32,7 @@ public class Grid {
         return colision;
     }
 
-    public void eat_food(){
+    public void eat_food(){ // executes the growth of the Snake and removes the "eaten" food
         int x = Snake.get(0).get_x();
         int y = Snake.get(0).get_y();
         if (grid_size[y][x].get_value() == 1){
