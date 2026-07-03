@@ -1,11 +1,11 @@
+import objects.Player;
 import view.gui.GUI_SNAKE_Portal;
 import view.terminal.TerminalLogin;
 import view.terminal.TerminalMenu;
-import objects.Player;
 
 public class Main {
     public static void main(String[] args) {
-        boolean startGUI = true;
+        boolean startGUI = false;
 
         if (startGUI) {
             GUI_SNAKE_Portal gui = new GUI_SNAKE_Portal();
