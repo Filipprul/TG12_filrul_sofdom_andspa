@@ -1,6 +1,6 @@
-package objects;
+package game.objects;
 
-import core.Direction;
+import game.core.Direction;
 
 public class Head extends Obj{  // Head of the snake and its movement 
     public Head(int x, int y, int value){

@@ -1,9 +1,9 @@
-package terminal;
+package view.terminal;
 
-import core.GameController;
-import core.Grid;
+import game.core.GameController;
+import game.core.Grid;
 import java.util.Scanner;
-import objects.Player;
+import game.objects.Player;
 
 public class TerminalMenu{
     private Scanner scanner;

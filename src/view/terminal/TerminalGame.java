@@ -1,6 +1,6 @@
-package terminal;
+package view.terminal;
 
-import core.Grid;
+import game.core.Grid;
 
 public class TerminalGame {
   private Grid grid;

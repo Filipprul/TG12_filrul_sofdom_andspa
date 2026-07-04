@@ -1,10 +1,10 @@
-package controller;
+package game.controller;
 
-import database.DatabaseConnector;
-import objects.Player;
+import game.database.DatabaseConnector;
+import game.objects.Player;
 
 public class LoginController {
-    private DatabaseConnector db;
+    private final DatabaseConnector db;
 
     public LoginController() {
         this.db = new DatabaseConnector();

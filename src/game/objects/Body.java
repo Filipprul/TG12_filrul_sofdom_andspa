@@ -1,4 +1,4 @@
-package objects;
+package game.objects;
 
 public class Body extends Obj{ // Body of the snake and how it follows the head.
     public Body(int x, int y, int value){

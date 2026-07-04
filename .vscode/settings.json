@@ -1,8 +1,6 @@
 {
     "java.project.sourcePaths": [
-        "src/main",
-        "src/game",
-        "src/view"
+        "src"
     ],
     "java.project.referencedLibraries": []
 }

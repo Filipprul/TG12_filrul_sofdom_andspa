@@ -1,4 +1,4 @@
-package objects;
+package game.objects;
 
 public class Player{
     final int id;

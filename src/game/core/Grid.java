@@ -1,5 +1,6 @@
-package core;
-import objects.*;
+package game.core;
+
+import game.objects.*;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -119,6 +120,5 @@ public class Grid {
     }
 
     public void zeichneGrid() {
-        
     }
 }
