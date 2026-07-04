@@ -1,4 +1,4 @@
-package view.terminal;
+package terminal;
 import controller.LoginController;
 import java.util.Scanner;
 import objects.Player;

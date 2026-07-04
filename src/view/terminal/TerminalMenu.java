@@ -1,4 +1,4 @@
-package view.terminal;
+package terminal;
 
 import core.GameController;
 import core.Grid;
@@ -58,5 +58,8 @@ public class TerminalMenu{
 
         GameController controller = new GameController(grid);
         controller.start();
+
+        System.out.println("Drücke ENTER, um das Spiel zu verlassen und ins Menü zurückzukehren...");
+        scanner.nextLine();
     }
 }
