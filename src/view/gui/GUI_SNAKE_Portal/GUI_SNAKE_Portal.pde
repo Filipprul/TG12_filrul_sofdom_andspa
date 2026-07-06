@@ -4,7 +4,7 @@
 int schwarz=0;
 void setup() {
     size(47*18+24, 47*18+24);
-    background(255);
+    background(0);
 
     draw(color(#a9e53d),color(#2fd710),47,18,18);
 }
