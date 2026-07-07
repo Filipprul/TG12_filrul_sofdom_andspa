@@ -1,6 +1,9 @@
 {
     "java.project.sourcePaths": [
-        "src"
+        "src",
+        "src/view/gui/GUI_SNAKE_Portal"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [
+        "src/view/gui/GUI_SNAKE_Portal/Libaries/core.jar"
+    ]
 }
