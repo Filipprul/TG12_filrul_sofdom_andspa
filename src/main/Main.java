@@ -1,8 +1,8 @@
 package main;
 
-//import game.Player;
-//import game.TerminalLogin;
-//import game.TerminalMenu;
+import game.Player;
+import game.TerminalLogin;
+import game.TerminalMenu;
 
 public class Main {
     public static void main(String[] args) {
