@@ -1,7 +1,9 @@
 package game.core;
 
-import game.objects.*;
 import java.util.Random;
+
+import code.game.objects.*;
+
 import java.util.ArrayList;
 
 public class Grid {
@@ -121,3 +123,4 @@ public class Grid {
     public void zeichneGrid() {
     }
 }
+

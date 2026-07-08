@@ -1,7 +1,7 @@
-package game.controller;
+package code.game.controller;
 
 import game.database.DatabaseConnector;
-import game.objects.Player;
+import code.game.objects.Player;
 
 public class LoginController {
     private final DatabaseConnector db;

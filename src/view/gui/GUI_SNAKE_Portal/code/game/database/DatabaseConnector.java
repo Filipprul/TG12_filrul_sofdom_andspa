@@ -1,4 +1,4 @@
-package game.database;
+ package code.game.database;
 
 public class DatabaseConnector {
     public void saveHighscore(String username, int score) {

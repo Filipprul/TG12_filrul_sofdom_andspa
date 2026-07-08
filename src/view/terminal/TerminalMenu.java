@@ -1,9 +1,10 @@
 package view.terminal;
 
-import game.core.GameController;
-import game.core.Grid;
 import java.util.Scanner;
-import game.objects.Player;
+
+import code.game.core.GameController;
+import code.game.core.Grid;
+import code.game.objects.Player;
 
 public class TerminalMenu{
     private Scanner scanner;

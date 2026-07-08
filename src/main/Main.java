@@ -1,6 +1,6 @@
 package main;
 
-import game.objects.Player;
+import code.game.objects.Player;
 import view.terminal.TerminalLogin;
 import view.terminal.TerminalMenu;
 

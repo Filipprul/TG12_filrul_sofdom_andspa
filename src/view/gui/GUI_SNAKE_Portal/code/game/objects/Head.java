@@ -1,5 +1,5 @@
-package game.objects;
-import game.core.Direction;
+package code.game.objects;
+import code.game.core.Direction;
 
 public class Head extends Obj {
      public Head(int x, int y, int value){

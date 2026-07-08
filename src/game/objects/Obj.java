@@ -50,3 +50,4 @@ public class Obj {
         this.previus_y = this.y;
     }
 }
+

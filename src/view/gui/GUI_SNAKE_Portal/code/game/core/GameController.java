@@ -1,4 +1,4 @@
-package game.core;
+package code.game.core;
 
 import java.util.Locale;
 import java.util.Scanner;
