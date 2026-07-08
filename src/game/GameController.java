@@ -8,6 +8,7 @@ public class GameController {
     private final TerminalGame gameView; // Speicherung View
     private boolean running = false;
     private static final long FRAME_DELAY_MS = 200; // 5 Updates pro Sekunde
+    private final Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
 
     public GameController(Grid grid) {
         this.grid = grid;
@@ -69,7 +70,6 @@ public class GameController {
         System.out.println("Steuerung: W = Hoch, S = Runter, A = Links, D = Rechts, Q = Beenden");
 
         // Kein try-with-resouces, da wir den Scanner später noch im TerminalMenu verwenden wollen.
-        Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
 
         while (!eingabe.equals("q") && running) {
             eingabe = scanner.nextLine();
@@ -96,6 +96,8 @@ public class GameController {
                     break;
             }
         }
+        // Scanner schließen, wenn Spiel endet
+        scanner.close();
         
     }
 }
