@@ -1,8 +1,7 @@
-package game.core;
+package game;
 
 import java.util.Locale;
 import java.util.Scanner;
-import view.terminal.TerminalGame;
 
 public class GameController {
     private final Grid grid; // Speicherung Spielfeld

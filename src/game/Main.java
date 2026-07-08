@@ -1,8 +1,4 @@
-package main;
-
-import code.game.objects.Player;
-import view.terminal.TerminalLogin;
-import view.terminal.TerminalMenu;
+package game;
 
 public class Main {
     public static void main(String[] args) {

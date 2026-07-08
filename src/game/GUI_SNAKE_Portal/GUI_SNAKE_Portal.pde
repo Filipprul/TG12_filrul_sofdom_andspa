@@ -1,16 +1,12 @@
-import game.core.Grid;
 
-Grid grid;
 int schwarz = 0;
-int kaestchenSize = 47;
+
 
 void setup() {
-    size(kaestchenSize * 18 + 24, kaestchenSize * 18 + 24);
+    size(47 * 18 + 24, 47 * 18 + 24);
     background(0);
 
-    grid = new Grid();
-
-    drawGrid(color(#a9e53d), color(#2fd710), kaestchenSize, 18, 18);
+    drawGrid(color(#a9e53d), color(#2fd710), 47, 18, 18);
     drawSnake();
 }
 

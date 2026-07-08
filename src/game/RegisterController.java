@@ -1,4 +1,4 @@
-package game.controller;
+package game;
 
 public class RegisterController {
     
