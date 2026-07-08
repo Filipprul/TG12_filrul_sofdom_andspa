@@ -1,7 +1,7 @@
 package game.objects;
 
 public class Obj {
-     private int x; // x cordinate
+    private int x; // x cordinate
     private int y; // y cordinate
     private int value; // value of 0 = nothing is sopoused to happen. value of 1 = is a body part. value of 2 = is food.
     private int previus_x;

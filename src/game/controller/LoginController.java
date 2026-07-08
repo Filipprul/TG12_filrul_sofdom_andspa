@@ -1,5 +1,4 @@
 package game.controller;
-
 import game.database.DatabaseConnector;
 import game.objects.Player;
 
