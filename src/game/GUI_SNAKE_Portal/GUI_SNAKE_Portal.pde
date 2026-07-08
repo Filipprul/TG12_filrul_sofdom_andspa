@@ -1,4 +1,4 @@
-import Gui_SNAKE_Portal.libraries.core;
+import game.*;
 int schwarz = 0;
 
 
