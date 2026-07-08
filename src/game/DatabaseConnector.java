@@ -1,6 +1,4 @@
 package game;
-import java.sql.Connection;
-import java.sql.Statement;
 
 public class DatabaseConnector {
     public void saveHighscore(String username, int score) {
