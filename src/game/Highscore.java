@@ -10,11 +10,7 @@ public class Highscore {
         this.currentScore = score;
         this.date = new java.util.Date().toString();
     }
-
-    public void increseScore(int increaseBy){
-        currentScore += increasseBy;
-    }
-
+    
     public String getUsername() {return currentPlayer.getUsername();}
     public int getScore() {return currentScore;}
     public String getDate() {return date;}
