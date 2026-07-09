@@ -56,7 +56,7 @@ public class TerminalMenu{
         TerminalGame gameView = new TerminalGame(grid);
         gameView.render();
 
-        GameController controller = new GameController(grid);
+        GameController controller = new GameController(grid, scanner);
         controller.start();
 
         System.out.println("Drücke ENTER, um das Spiel zu verlassen und ins Menü zurückzukehren...");

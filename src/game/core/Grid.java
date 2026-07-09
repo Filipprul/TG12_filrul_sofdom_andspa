@@ -12,7 +12,7 @@ public class Grid {
     private static final int GRID_SIZE = 18;
     private ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
     private final Obj[][] grid_size = new Obj[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
-    private Direction direction = Direction.RIGHT;
+    private Direction direction = Direction.DOWN;
     private int food_index = 0;
     private int max_food = 3;
     private int score = 0;
@@ -34,13 +34,13 @@ public class Grid {
                 colision = false;
             }
         }
-        return colision;
+        return false;
     }
 
     public void eat_food(){ // executes the growth of the Snake and removes the "eaten" food
         int x = Snake.get(0).get_x();
         int y = Snake.get(0).get_y();
-        if (grid_size[y][x] != null && grid_size[y][x].get_value() == 1){ // (grid_size[y][x] != null) hab es hinzugefügt wegen NullPointerException
+        if (grid_size[y][x] != null && grid_size[y][x].get_value() == 2){
             grid_size[y][x] = null; // Futter entfernen
             food_index --;          // Futterindex verringern
             snake_grow();           // Snake wachsen lassen
@@ -54,7 +54,7 @@ public class Grid {
 
     public void spawn_snake(){
         Snake.clear();
-        Snake.add(new Head(8, 8, 1));
+        Snake.add(new Head(8, 8, 3));
         Snake.add(new Body(7, 8, 1));
     }
 
@@ -147,6 +147,30 @@ public class Grid {
                 System.out.print("["+currentFieled+"]");
             }
         System.out.println();
+        }
+    }
+
+    public void syncSnakeToGrid() {
+        // 1. Das Gitter von der alten Schlange säubern
+        for (int y = 0; y < grid_size.length; y++) {
+            for (int x = 0; x < grid_size[0].length; x++) {
+                // Wir löschen nur, wenn es ein Schlangenteil ist (value 1 oder 3)
+                // Essen (value 2) lassen wir in Ruhe!
+                if (grid_size[y][x] != null && grid_size[y][x].get_value() != 2) {
+                    grid_size[y][x] = null;
+                }
+            }
+        }
+
+        // 2. Die aktuelle Schlange aus der Liste in das Gitter zeichnen
+        for (Obj part : Snake) {
+            int x = part.get_x();
+            int y = part.get_y();
+            
+            // Grenzen prüfen, um Abstürze zu vermeiden
+            if (x >= 0 && x < grid_size[0].length && y >= 0 && y < grid_size.length) {
+                grid_size[y][x] = part;
+            }
         }
     }
 }

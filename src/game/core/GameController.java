@@ -1,8 +1,6 @@
 package game.core;
 
-import java.util.Locale;
 import java.util.Scanner;
-
 import view.terminal.TerminalGame;
 
 public class GameController {
@@ -10,23 +8,25 @@ public class GameController {
     private final TerminalGame gameView; // Speicherung View
     private boolean running = false;
     private static final long FRAME_DELAY_MS = 200; // 5 Updates pro Sekunde
-    private final Scanner scanner = new Scanner(System.in).useLocale(Locale.US);
+    private final Scanner scanner;
 
-    public GameController(Grid grid) {
+    public GameController(Grid grid, Scanner scanner) {
         this.grid = grid;
         this.gameView = new TerminalGame(grid);
+        this.scanner = scanner;
     }
 
     public void start() { // Start des Spiels
         grid.spawn_snake();
         grid.spawn_food();
+        grid.syncSnakeToGrid();
         running = true;
 
         Thread loopThread = new Thread(this::runLoop);
         loopThread.setDaemon(true);
         loopThread.start();
 
-        steuerung(); // Steuerung aufrufen
+        steuerung();
     }
 
     public void stop() {
@@ -49,6 +49,7 @@ public class GameController {
 
     private void update() {
         grid.snake_move();
+        grid.syncSnakeToGrid();
         if (grid.chech_colision()) {
             System.out.println("Game Over!");
             stop();
@@ -65,18 +66,12 @@ public class GameController {
         System.out.print(">");
     }
 
-    // Steuerung
-    public void steuerung () {
-        String eingabe = "";
+    public void steuerung() {
+        System.out.println("Steuerung: W = Hoch, S = Runter, A = Links, D = Rechts, Q = Beenden (jeweils + ENTER)");
 
-        System.out.println("Steuerung: W = Hoch, S = Runter, A = Links, D = Rechts, Q = Beenden");
-
-        // Kein try-with-resouces, da wir den Scanner später noch im TerminalMenu verwenden wollen.
-
-        while (!eingabe.equals("q") && running) {
-            eingabe = scanner.nextLine();
-
-            switch (eingabe.toLowerCase()) {
+        while (running) {
+            String eingabe = scanner.nextLine().toLowerCase();
+            switch (eingabe) {
                 case "w":
                     grid.setDirection(Direction.UP);
                     break;
@@ -94,12 +89,8 @@ public class GameController {
                     System.out.println("Spiel beendet.");
                     break;
                 default:
-                    // Keine Fehlermeldungen im Loop, sonst entsteht nur unötiger Spam im Terminal.
                     break;
             }
         }
-        // Scanner schließen, wenn Spiel endet
-        scanner.close();
-        
     }
 }
