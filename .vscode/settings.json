@@ -1,9 +1,9 @@
 {
     "java.project.sourcePaths": [
         "src",
-        "src/GUI_SNAKE_Portal"
+        "src/GuiSnakePortal"
     ],
     "java.project.referencedLibraries": [
-        "src/GUI_SNAKE_Portal/Libaries/core.jar"
+        "src/GuiSnakePortal/Libaries/core.jar"
     ]
 }
