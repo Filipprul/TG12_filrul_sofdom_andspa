@@ -11,6 +11,7 @@ public class Grid {
     private Direction direction = Direction.RIGHT;
     private int food_index = 0;
     private int max_food = 3;
+    private int score = 0;
 
     public Grid (){
         spawn_snake();
@@ -41,6 +42,9 @@ public class Grid {
             snake_grow();
             increaseScore(10);
         }
+    }
+    public void increaseScore(int increaseBy){
+        score += increaseBy;
     }
 
     public void spawn_snake(){
@@ -118,7 +122,30 @@ public class Grid {
         }
     }
 
-    public void zeichneGrid() {
+        public void zeichneGrid() {
+        char nothing = ' ';
+        char kopf = '*';
+        char koerper = '§';
+        char essen = 'º';
+        char currentFieled = ' ';
+        for(int y = 0; y < GRID_SIZE; y++){
+            for(int x = 0; x < GRID_SIZE; x++){
+                if(grid_size[y][x] != null){
+                    int value = grid_size[y][x].get_value();
+                    if(value == 0){
+                    currentFieled = nothing;
+                    }else if(value == 1){
+                    currentFieled = koerper;
+                    }else if(value == 2){
+                    currentFieled = essen;
+                    }else if(value == 3){
+                    currentFieled = kopf;
+                    }
+                }
+                System.out.print("["+currentFieled+"]");
+            }
+        System.out.println("");
+        }
     }
 }
 
