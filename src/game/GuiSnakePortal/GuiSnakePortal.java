@@ -8,21 +8,16 @@ public class GuiSnakePortal extends PApplet {
     }
     public void settings() {
         size(47 * 18 + 24, 47 * 18 + 24);
-        background(0);
-        int first = color(0xa9e53d);
-        int second = color(0x2fd710);
-        drawGrid(first, second, 47, 18, 18);
-        drawSnake();
     }
 
-    /*public void setup() {
-        background(0);
+    public void setup() {
+        background(255);
         // use int for colors in Processing Java mode
         int first = color(0xa9e53d);
         int second = color(0x2fd710);
         drawGrid(first, second, 47, 18, 18);
         drawSnake();
-    }*/
+    }
 
     void drawSnake() {
         fill(255);
