@@ -11,10 +11,10 @@ public class GuiSnakePortal extends PApplet {
     }
 
     public void setup() {
-        background(255);
+        background(0);
         // use int for colors in Processing Java mode
-        int first = color(0xa9e53d);
-        int second = color(0x2fd710);
+        int first = color(0xffa9e53d);
+        int second = color(0xff2fd710);
         drawGrid(first, second, 47, 18, 18);
         drawSnake();
     }
