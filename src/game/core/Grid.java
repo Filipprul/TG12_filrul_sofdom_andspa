@@ -40,13 +40,14 @@ public class Grid {
     public void eat_food(){ // executes the growth of the Snake and removes the "eaten" food
         int x = Snake.get(0).get_x();
         int y = Snake.get(0).get_y();
-        if (grid_size[y][x].get_value() == 1){
-            grid_size[y][x] = null;
-            food_index --;
-            snake_grow();
-            increaseScore(10);
+        if (grid_size[y][x] != null && grid_size[y][x].get_value() == 1){ // (grid_size[y][x] != null) hab es hinzugefügt wegen NullPointerException
+            grid_size[y][x] = null; // Futter entfernen
+            food_index --;          // Futterindex verringern
+            snake_grow();           // Snake wachsen lassen
+            increaseScore(1);  // Score erhöhen
         }
     }
+
     public void increaseScore(int increaseBy){
         score += increaseBy;
     }
@@ -60,8 +61,8 @@ public class Grid {
     public void spawn_food(){ // randomly spawn a food obj on the grid
         Random random = new Random();
         if (food_index < max_food +1){
-            int x = random.nextInt(GRID_SIZE+1);
-            int y = random.nextInt(GRID_SIZE+1);
+            int x = random.nextInt(GRID_SIZE); // ArrayIndexOutOfBoundsException Problem weil random.nextInt(GRID_SIZE) 0-17 liefert und grid_size[18][18] nur 0-17 hat
+            int y = random.nextInt(GRID_SIZE);
             if (grid_size[y][x] != null && (grid_size[y][x].get_value() == 2 || grid_size[y][x].get_value() == 1)) {
                 spawn_food();
             } else {
@@ -127,28 +128,25 @@ public class Grid {
     }
 
         public void zeichneGrid() {
-        char nothing = ' ';
-        char kopf = '*';
-        char koerper = '§';
-        char essen = 'º';
-        char currentFieled = ' ';
+        // ANSI escape code um das Terminal zu säubern
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         for(int y = 0; y < GRID_SIZE; y++){
             for(int x = 0; x < GRID_SIZE; x++){
+                char currentFieled = ' '; // Deklariere currentFieled innerhalb der inneren Schleife, damit es für jedes Feld neu zurückgesetzt wird.
                 if(grid_size[y][x] != null){
                     int value = grid_size[y][x].get_value();
-                    if(value == 0){
-                    currentFieled = nothing;
-                    }else if(value == 1){
-                    currentFieled = koerper;
-                    }else if(value == 2){
-                    currentFieled = essen;
-                    }else if(value == 3){
-                    currentFieled = kopf;
+                    // switch-case für bessere Lesbarkeit und Wartbarkeit
+                    switch (value) {
+                        case 1: currentFieled = '§'; break; // Körper
+                        case 2: currentFieled = '°'; break; // Essen
+                        case 3: currentFieled = '*'; break; // Kopf
+                        default: currentFieled = ' '; break; // Nichts
                     }
                 }
                 System.out.print("["+currentFieled+"]");
             }
-        System.out.println("");
+        System.out.println();
         }
     }
 }
