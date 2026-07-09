@@ -39,6 +39,7 @@ public class Grid {
             grid_size[y][x] = null;
             food_index --;
             snake_grow();
+            increaseScore(10);
         }
     }
 
