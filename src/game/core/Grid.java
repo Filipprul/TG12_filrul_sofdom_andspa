@@ -1,7 +1,11 @@
-package game;
+package game.core;
 
-import java.util.Random;
+import game.objects.Body;
+import game.objects.Food;
+import game.objects.Head;
+import game.objects.Obj;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Grid {
 

@@ -1,4 +1,4 @@
-package game;
+package game.objects;
 
 public class Obj {
     private int x; // x cordinate

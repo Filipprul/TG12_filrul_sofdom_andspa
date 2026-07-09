@@ -1,20 +1,21 @@
 package main;
 
-import game.Player;
-import game.GuiSnakePortal.GuiSnakePortal.TerminalLogin;
-import game.GuiSnakePortal.GuiSnakePortal.TerminalMenu;
+import game.objects.Player;
+import view.terminal.TerminalLogin;
+import view.terminal.TerminalMenu;
+import processing.core.PApplet;
 
 public class Main {
     public static void main(String[] args) {
         boolean startGUI = false;
 
         if (startGUI) {
-            // GUI-Startlogik hier einfügen
+            PApplet.main("view.gui.gui");
         } else {
             TerminalLogin login = new TerminalLogin();
-            Player eingeloggterSpieler = login.zeigeLogin();
+            Player eingelogterPlayer = (Player) login.zeigeLogin();
 
-            TerminalMenu menu = new TerminalMenu(eingeloggterSpieler);
+            TerminalMenu menu = new TerminalMenu(eingelogterPlayer);
             menu.zeigeMenue();
         }
     }

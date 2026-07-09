@@ -1,5 +1,8 @@
-package game;
+package view.terminal;
 
+import game.core.GameController;
+import game.core.Grid;
+import game.objects.Player;
 import java.util.Scanner;
 
 public class TerminalMenu{

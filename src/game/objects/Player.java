@@ -1,7 +1,7 @@
-package game;
+package game.objects;
 
 public class Player {
-     final int id;
+    final int id;
     final String username;
     private String passwort;
     private int highscore;

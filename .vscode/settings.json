@@ -3,7 +3,6 @@
         "src",
     ],
     "java.project.referencedLibraries": [
-        "src/GuiSnakePortal/Libaries/core.jar",
-        "src/game/GuiSnakePortal/libraries/core.jar"
+        "libraries/**/*.jar"
     ]
 }

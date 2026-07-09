@@ -1,4 +1,6 @@
-package game;
+package view.terminal;
+import game.controller.LoginController;
+import game.objects.Player;
 import java.util.Scanner;
 
 public class TerminalLogin {

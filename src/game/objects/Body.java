@@ -1,4 +1,4 @@
-package game;
+package game.objects;
 
 public class Body extends Obj {
       public Body(int x, int y, int value){

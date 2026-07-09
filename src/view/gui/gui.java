@@ -1,10 +1,10 @@
-package game.GuiSnakePortal;
+package view.gui;
 import processing.core.PApplet;
 
-public class GuiSnakePortal extends PApplet {
+public class gui extends PApplet {
     int schwarz = 0;
     public static void main(String[] args) {
-        PApplet.main(new String[] {"game.GuiSnakePortal.GuiSnakePortal"});
+        PApplet.main(new String[] {"view.gui.gui"});
     }
     public void settings() {
         size(47 * 18 + 24, 47 * 18 + 24);
