@@ -1,8 +1,8 @@
 package main;
 
 import game.Player;
-import game.GuiSnakePortal.GuiSnakePortal.code.TerminalLogin;
-import game.GuiSnakePortal.GuiSnakePortal.code.TerminalMenu;
+import game.GuiSnakePortal.GuiSnakePortal.TerminalLogin;
+import game.GuiSnakePortal.GuiSnakePortal.TerminalMenu;
 
 public class Main {
     public static void main(String[] args) {

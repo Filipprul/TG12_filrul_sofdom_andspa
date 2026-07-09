@@ -1,23 +1,28 @@
-//import game.GuiSnakePortal;
+package game.GuiSnakePortal;
 import processing.core.PApplet;
 
 public class GuiSnakePortal extends PApplet {
     int schwarz = 0;
     public static void main(String[] args) {
-        PApplet.main(new String[] {"game.GuiSnakePortal"});
+        PApplet.main(new String[] {"game.GuiSnakePortal.GuiSnakePortal"});
     }
     public void settings() {
         size(47 * 18 + 24, 47 * 18 + 24);
+        background(0);
+        int first = color(0xa9e53d);
+        int second = color(0x2fd710);
+        drawGrid(first, second, 47, 18, 18);
+        drawSnake();
     }
 
-    public void setup() {
+    /*public void setup() {
         background(0);
         // use int for colors in Processing Java mode
         int first = color(0xa9e53d);
         int second = color(0x2fd710);
         drawGrid(first, second, 47, 18, 18);
         drawSnake();
-    }
+    }*/
 
     void drawSnake() {
         fill(255);
