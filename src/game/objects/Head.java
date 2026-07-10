@@ -11,10 +11,10 @@ public class Head extends Obj {
         updatePreviousPosition();
         switch (direction) {
             case UP:
-                set_y(get_y() + 1);
+                set_y(get_y() - 1);
                 break;
             case DOWN:
-                set_y(get_y() - 1);
+                set_y(get_y() + 1);
                 break;
             case LEFT:
                 set_x(get_x() - 1);
