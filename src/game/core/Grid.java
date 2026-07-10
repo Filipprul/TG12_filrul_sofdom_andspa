@@ -12,7 +12,7 @@ public class Grid {
     private static final int GRID_SIZE = 18;
     private ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
     private final Obj[][] grid_size = new Obj[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
-    private Direction direction = Direction.DOWN;
+    private Direction direction = Direction.UP;
     private int food_index = 0;
     private int max_food = 3;
     private int score = 0;
@@ -79,41 +79,24 @@ public class Grid {
     }
 
     public void setDirection(Direction direction){
-        if (direction == null) {
-            return;
-        }
-        if (direction.isOpposite(this.direction)) {
-            return;
-        }
+        if (direction == null) {return;}
+        if (direction.isOpposite(this.direction)) {return;}
         this.direction = direction;
     }
 
     public void setDirection(String input){
-        if (input == null) {
-            return;
-        }
+        if (input == null) {return;}
         switch (input.toLowerCase()) {
-            case "up":
-                setDirection(Direction.UP);
-                break;
-            case "down":
-                setDirection(Direction.DOWN);
-                break;
-            case "left":
-                setDirection(Direction.LEFT);
-                break;
-            case "right":
-                setDirection(Direction.RIGHT);
-                break;
-            default:
-                break;
+            case "up" -> setDirection(Direction.UP);
+            case "down" -> setDirection(Direction.DOWN);
+            case "left" -> setDirection(Direction.LEFT);
+            case "right" -> setDirection(Direction.RIGHT);
+            default -> {}
         }
     }
 
     public void snake_move(){
-        if (Snake.isEmpty()) {
-            return;
-        }
+        if (Snake.isEmpty()) {return;}
         Obj head = Snake.get(0);
         if (head instanceof Head) {
             ((Head) head).move(direction);
@@ -133,18 +116,18 @@ public class Grid {
         System.out.flush();
         for(int y = 0; y < GRID_SIZE; y++){
             for(int x = 0; x < GRID_SIZE; x++){
-                char currentFieled = ' '; // Deklariere currentFieled innerhalb der inneren Schleife, damit es für jedes Feld neu zurückgesetzt wird.
+                char currentField = ' '; // Deklariere currentFieled innerhalb der inneren Schleife, damit es für jedes Feld neu zurückgesetzt wird.
                 if(grid_size[y][x] != null){
                     int value = grid_size[y][x].get_value();
                     // switch-case für bessere Lesbarkeit und Wartbarkeit
-                    switch (value) {
-                        case 1: currentFieled = '§'; break; // Körper
-                        case 2: currentFieled = '°'; break; // Essen
-                        case 3: currentFieled = '*'; break; // Kopf
-                        default: currentFieled = ' '; break; // Nichts
-                    }
+                    currentField = switch (value) {
+                        case 1 -> '§'; // Körper
+                        case 2 -> '°'; // Essen
+                        case 3 -> '*'; // Kopf
+                        default -> ' '; // Nichts
+                    };
                 }
-                System.out.print("["+currentFieled+"]");
+                System.out.print("["+currentField+"]");
             }
         System.out.println();
         }
