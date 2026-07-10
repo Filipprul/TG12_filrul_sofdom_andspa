@@ -2,6 +2,8 @@ package game.core;
 
 import java.util.Scanner;
 import view.terminal.TerminalGame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class GameController {
     private final Grid grid; // Speicherung Spielfeld
@@ -66,31 +68,18 @@ public class GameController {
         System.out.print(">");
     }
 
-    public void steuerung() {
-        System.out.println("Steuerung: W = Hoch, S = Runter, A = Links, D = Rechts, Q = Beenden (jeweils + ENTER)");
+    public void steuerung(KeyEvent e) {
+        System.out.println("DEBUG: Steuerung aktiv!");
+        int code = e.getKeyCode();
 
-        while (running) {
-            String eingabe = scanner.nextLine().toLowerCase();
-            switch (eingabe) {
-                case "w":
-                    grid.setDirection(Direction.UP);
-                    break;
-                case "s":
-                    grid.setDirection(Direction.DOWN);
-                    break;
-                case "a":
-                    grid.setDirection(Direction.LEFT);
-                    break;
-                case "d":
-                    grid.setDirection(Direction.RIGHT);
-                    break;
-                case "q":
-                    stop();
-                    System.out.println("Spiel beendet.");
-                    break;
-                default:
-                    break;
-            }
+        if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A) {
+            spielfeld.getSpieler().bewegeLinks();
+        } else if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
+            spielfeld.getSpieler().bewegeRechts();
+        } else if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W) {
+            spielfeld.getSpieler().bewegeOben();
+        } else if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
+            spielfeld.getSpieler().bewegeUnten();
         }
     }
 }
