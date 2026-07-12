@@ -1,38 +1,60 @@
 package view.gui;
+import game.core.Direction;
+import game.core.GameController;
+import game.core.Grid;
 import processing.core.PApplet;
 
 public class gui extends PApplet {
-    int schwarz = 0;
+    private GameController controller;
+    private int schwarz = 0;
     public static void main(String[] args) {
-        PApplet.main(new String[] {"view.gui.gui"});
+        PApplet.main(new String[] {"view.gui.gui.gui"});
     }
+
     public void settings() {
         size(47 * 18 + 24, 47 * 18 + 24);
     }
 
     public void setup() {
+        controller = new GameController(new Grid());
+        controller.start();
         background(0);
-        // use int for colors in Processing Java mode
-        int first = color(0xffa9e53d);
-        int second = color(0xff2fd710);
-        drawGrid(first, second, 47, 18, 18);
-        drawSnake();
     }
+
+    public void draw() {
+        if (frameCount % 10 == 0) {
+            controller.update();
+            background(0);
+            drawGrid(color(0xffa9e53d), color(0xff2fd710), 47, 18, 18);
+            drawSnake();
+            drawFood();
+        }
+
+        if (!controller.isRunning()) {
+            fill(255, 0, 0);
+            textSize(32);
+            text("Game Over", 100, 200);
+            return;
+        }
+    }
+
     void drawSnake() {
+        var snake = controller.getGrid().getSnake();
         fill(255);
-        circle(Snake[0].get_x * 47 + 34, Snake[0].get_y * 47 + 34, 45);
-        for(int i=1; i < Snake.size; i++){
+        circle(snake.get(0).get_x() * 47 + 34, snake.get(0).get_y() * 47 + 34, 45);
+        for(int i = 1; i < snake.size(); i++){
             fill(205,127,50);
-            circle(Snake[i].get_x* 47 + 34, Snake[i].get_y * 47 + 34, 45);
+            circle(snake.get(i).get_x() * 47 + 34, snake.get(i).get_y() * 47 + 34, 45);
         }
     }
 
     void drawFood(){
-        for(int py = 0; py < grid_size.size; py++){
-            for(int px = 0 < grid_size[0].size; px++){
-                if(grid_size[py][px].get_value() == 2){
-                    fill(129,0,21);
-                    circle(px * 47 + 34, py * 47 + 34, 30)
+        var cells = controller.getGrid().getGridSize();
+        for(int py = 0; py < 18; py++){
+            for(int px = 0; px < 18; px++){
+                if(cells[py][px] != null && cells[py][px].get_value() == 2){
+                    fill(129, 0, 21);
+                    circle(px * 47 + 34, py * 47 + 34, 30);
                 }
             }
         }
@@ -57,5 +79,12 @@ public class gui extends PApplet {
             fill(secondColor);
             schwarz = 0;
         }
+    }
+
+    public void keyPressed() {
+        if (key == 'w') controller.getGrid().setDirection(Direction.UP);
+        else if (key == 's') controller.getGrid().setDirection(Direction.DOWN);
+        else if (key == 'a') controller.getGrid().setDirection(Direction.LEFT);
+        else if (key == 'd') controller.getGrid().setDirection(Direction.RIGHT);
     }
 }

@@ -21,18 +21,15 @@ public class Grid {
         spawn_snake();
     }
 
-    public boolean chech_colision(){ // checks if the snake hits itsef or the void/border of the map
-        boolean colision = false;
-        for(int i = 1; i< Snake.size();i++){
-            if (Snake.get(0).get_x() == Snake.get(i).get_x()){
-                colision = true;
-            }else if (Snake.get(0).get_y() > grid_size.length || Snake.get(0).get_previus_y() < grid_size.length){
-                colision = true;
-            }else if (Snake.get(0).get_x() > grid_size[0].length || Snake.get(0).get_previus_x() < grid_size[0].length){
-                colision = true;
-            }else {
-                colision = false;
-            }
+    public boolean check_colision(){ // checks if the snake hits itsef or the void/border of the map
+        Obj head = Snake.get(0);
+
+        // 1. Wand-Collision
+        if (head.get_x() < 0 || head.get_x() >= GRID_SIZE || head.get_y() < 0 || head.get_y() >= GRID_SIZE) {return true;}
+
+        // 2. Self-Collision
+        for (int i = 1; i < Snake.size(); i++) {
+            if (head.get_x() == Snake.get(i).get_x() && head.get_y() == Snake.get(i).get_y()) {return true;}
         }
         return false;
     }
@@ -110,29 +107,6 @@ public class Grid {
         }
     }
 
-        public void zeichneGrid() {
-        // ANSI escape code um das Terminal zu säubern
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        for(int y = 0; y < GRID_SIZE; y++){
-            for(int x = 0; x < GRID_SIZE; x++){
-                char currentField = ' '; // Deklariere currentFieled innerhalb der inneren Schleife, damit es für jedes Feld neu zurückgesetzt wird.
-                if(grid_size[y][x] != null){
-                    int value = grid_size[y][x].get_value();
-                    // switch-case für bessere Lesbarkeit und Wartbarkeit
-                    currentField = switch (value) {
-                        case 1 -> '§'; // Körper
-                        case 2 -> '°'; // Essen
-                        case 3 -> '*'; // Kopf
-                        default -> ' '; // Nichts
-                    };
-                }
-                System.out.print("["+currentField+"]");
-            }
-        System.out.println();
-        }
-    }
-
     public void syncSnakeToGrid() {
         // 1. Das Gitter von der alten Schlange säubern
         for (int y = 0; y < grid_size.length; y++) {
@@ -156,5 +130,9 @@ public class Grid {
             }
         }
     }
+
+    public ArrayList<Obj> getSnake() {return Snake;}
+
+    public Obj[][] getGridSize() {return grid_size;}
 }
 

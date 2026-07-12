@@ -3,7 +3,7 @@ package game.objects;
 import game.core.Direction;
 
 public class Head extends Obj {
-     public Head(int x, int y, int value){
+    public Head(int x, int y, int value){
         super(x, y, value);
     }
 
@@ -24,5 +24,5 @@ public class Head extends Obj {
                 break;
         }
     
-    }   
+    }
 }

@@ -15,25 +15,11 @@ public class Obj {
         this.previus_y = y;
     }
 
-    public int get_value(){
-        return value;
-    }
-
-    public int get_x(){
-        return x;
-    }
-
-    public int get_y(){
-        return y;
-    }
-
-    public int get_previus_y(){
-        return previus_y;
-    }
-
-    public int get_previus_x(){
-        return previus_x;
-    }
+    public int get_value(){return value;}
+    public int get_x(){return x;}
+    public int get_y(){return y;}
+    public int get_previus_y(){return previus_y;}
+    public int get_previus_x(){return previus_x;}
 
     public void set_x(int x){
         this.previus_x = this.x;
