@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "main.Main",
+            "projectName": "TG12_filrul_sofdom_andspa_9e7f75aa"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "main.Main",
             "projectName": "TG12_filrul_sofdom_andspa_7dc967e6"
         },
         {
