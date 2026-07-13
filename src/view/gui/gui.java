@@ -78,15 +78,16 @@ public class gui {
         }
     }
 
-    public void keyPressed(char k) {
-        if (k == 'w' || k == 'W') {
-            controller.getGrid().setDirection(Direction.UP);
-        } else if (k == 's' || k == 'S') {
-            controller.getGrid().setDirection(Direction.DOWN);
-        } else if (k == 'a' || k == 'A') {
-            controller.getGrid().setDirection(Direction.LEFT);
-        } else if (k == 'd' || k == 'D') {
-            controller.getGrid().setDirection(Direction.RIGHT);
-        }
-    }
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+       
+         if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A) {
+            controller.changeDirection(Direction.LEFT);
+        } else if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
+            controller.changeDirection(Direction.RIGHT);
+        } else if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W) {
+            controller.changeDirection(Direction.UP);
+        } else if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
+            controller.changeDirection(Direction.DOWN);
+        }}
 }
