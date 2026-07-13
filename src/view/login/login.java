@@ -1,18 +1,20 @@
 package view.login;
 import processing.core.PApplet;
+import data.DatabaseConnector;
 
 public class login {
     private boolean loggedIn = false;
-    private float alpha = 0;
     private PApplet parent;
-    public login(PApplet p) { // Dieser Konstruktor ist zwingend nötig
-        this.parent = p;
-    }
+    private DatabaseConnector db = new DatabaseConnector();
+    private String currentUsername = "";
+    private String currentPassword = "";
+    private boolean isUsernameActive = true;
 
-    public void settings() {
-        parent.size(47 * 18 + 24, 47 * 18 + 24);
-    }
+    public login(PApplet p) {this.parent = p;}
 
+    public void settings() {parent.size(47 * 18 + 24, 47 * 18 + 24);}
+
+    // draw() ausbessern/verbessern!
     public void draw() {
         parent.background(20);
         if (alpha < 255) alpha += 5;
@@ -35,8 +37,7 @@ public class login {
 
     public void keyPressed(char key) {
         if (key == PApplet.ENTER || key == '\n' || key == '\r') {
-            loggedIn = true;
-        }
+            loggedIn = true;}
     }
 
     public boolean isLoggedIn() {

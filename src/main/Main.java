@@ -4,16 +4,13 @@ import view.gui.gui;
 import view.login.login;
 
 public class Main extends PApplet {
-    
     enum State { LOGIN, GAME }
     State currentState = State.LOGIN;
 
     login loginScreen;
     gui game;
 
-    public void settings() {
-        size(864, 864); // Deine Größe
-    }
+    public void settings() {size(864, 864);}
 
     public void setup() {
         loginScreen = new login(this);
@@ -26,20 +23,14 @@ public class Main extends PApplet {
             if (loginScreen.isLoggedIn()) {
                 currentState = State.GAME;
             }
-        } else {
-            game.draw();
-        }
+        } else {game.draw();}
     }
 
     public void keyPressed() {
         if (currentState == State.LOGIN) {
             loginScreen.keyPressed(key);
-        } else {
-            game.keyPressed(key);
-        }
+        } else {game.keyPressed(key);}
     }
 
-    public static void main(String[] args) {
-        PApplet.main("main.Main"); // Startet EIN Fenster
-    }
+    public static void main(String[] args) {PApplet.main("main.Main");}
 }

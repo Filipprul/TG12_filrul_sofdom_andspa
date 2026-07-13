@@ -9,6 +9,7 @@ public class gui {
     private GameController controller;
     private int schwarz = 0;
     private PApplet parent;
+
     public gui(PApplet p) {
         this.controller = new GameController(new Grid());
         this.parent = p;
@@ -32,7 +33,6 @@ public class gui {
             parent.fill(255, 0, 0);
             parent.textSize(32);
             parent.text("Game Over", 100, 200);
-            return;
         }
     }
 
@@ -79,14 +79,10 @@ public class gui {
     }
 
     public void keyPressed(char k) {
-        if (k == 'w' || k == 'W') {
-            controller.getGrid().setDirection(Direction.UP);
-        } else if (k == 's' || k == 'S') {
-            controller.getGrid().setDirection(Direction.DOWN);
-        } else if (k == 'a' || k == 'A') {
-            controller.getGrid().setDirection(Direction.LEFT);
-        } else if (k == 'd' || k == 'D') {
-            controller.getGrid().setDirection(Direction.RIGHT);
+        if (k == 'w' || k == 'W') {controller.getGrid().setDirection(Direction.UP);
+        } else if (k == 's' || k == 'S') {controller.getGrid().setDirection(Direction.DOWN);
+        } else if (k == 'a' || k == 'A') {controller.getGrid().setDirection(Direction.LEFT);
+        } else if (k == 'd' || k == 'D') {controller.getGrid().setDirection(Direction.RIGHT);
         }
     }
 }
