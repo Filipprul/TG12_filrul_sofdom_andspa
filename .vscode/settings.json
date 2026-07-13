@@ -3,6 +3,7 @@
         "src",
     ],
     "java.project.referencedLibraries": [
-        "libraries/**/*.jar"
+        "libraries/**/*.jar",
+        "src/view/gui/libraries/core.jar"
     ]
 }
