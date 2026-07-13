@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "login",
+            "request": "launch",
+            "mainClass": "view.login.login",
+            "projectName": "TG12_filrul_sofdom_andspa_7dc967e6"
+        },
+        {
+            "type": "java",
+            "name": "gui",
+            "request": "launch",
+            "mainClass": "view.gui.gui",
+            "projectName": "TG12_filrul_sofdom_andspa_7dc967e6"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "main.Main",
