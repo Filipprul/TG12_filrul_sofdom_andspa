@@ -4,7 +4,6 @@
     ],
     "java.project.referencedLibraries": [
         "libraries/**/*.jar",
-        "src/view/view/libraries/core.jar",
         "src/view/gui/libraries/core.jar"
     ]
 }
