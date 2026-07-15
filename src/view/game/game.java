@@ -15,8 +15,8 @@ public class game {
 
     private final int cellSize = 47;
     private final int gridSize = 18; // Aus deiner Grid.java
-    private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
-    private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
+    //private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
+    //private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
 
     public game(PApplet p) {
         this.controller = new GameController(new Grid());
@@ -44,6 +44,8 @@ public class game {
     }
 
     void drawSnake() {
+        int offsetX = getOffsetX();
+        int offsetY = getOffsetY();
         var snake = controller.getGrid().getSnake();
         parent.noStroke();
 
@@ -76,6 +78,8 @@ public class game {
     }
 
     void drawFood(){
+        int offsetX = getOffsetX();
+        int offsetY = getOffsetY();
         var cells = controller.getGrid().getGridSize();
         controller.getGrid().spawn_food();
         for(int py = 0; py < gridSize; py++){
@@ -92,23 +96,27 @@ public class game {
 
     // Ändere deine Variablen in der gui-Klasse zu dynamischen Methoden
     public int getOffsetX() {
-        return (1000 - (18 * cellSize)) / 2; // Hier deine Grid-Größe
+        return (parent.width - (gridSize * cellSize)) / 2; // Hier deine Grid-Größe
     }
     public int getOffsetY() {
-        return (1000 - (18 * cellSize)) / 2; // Hier deine Grid-Größe
+        return (parent.height - (gridSize * cellSize)) / 2; // Hier deine Grid-Größe
     }   
 
     void drawGrid(int firstColor, int secondColor, int size, int nx, int ny) {
-        int offsetX = getOffsetX();
-        int offsetY = getOffsetY();
-        for (int y = 0; y < ny; y++) {
-            for (int x = 0; x < nx; x++) {
-                farbwechsel(firstColor, secondColor);
-                parent.rect(offsetX + (x * size), offsetY + (y * size), size, size);
+    int offsetX = getOffsetX();
+    int offsetY = getOffsetY();
+    for (int y = 0; y < ny; y++) {
+        for (int x = 0; x < nx; x++) {
+            // Wenn x + y gerade ist, Farbe 1, sonst Farbe 2
+            if ((x + y) % 2 == 0) {
+                parent.fill(firstColor);
+            } else {
+                parent.fill(secondColor);
             }
-            farbwechsel(firstColor, secondColor);
+            parent.rect(offsetX + (x * size), offsetY + (y * size), size, size);
         }
     }
+}
 
     void drawScore(){
         int currentScore = controller.getGrid().getScore();
@@ -138,6 +146,7 @@ public class game {
     public void resetGame() {
         this.controller = new GameController(new Grid());
         this.controller.start();
+        this.schwarz
     }
 
     public GameController getController() {return this.controller;}
