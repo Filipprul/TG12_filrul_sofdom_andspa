@@ -22,5 +22,6 @@ public class GameController {
     }
 
     public Grid getGrid() {return grid;}
+
     public boolean isRunning() {return running;}
 }
