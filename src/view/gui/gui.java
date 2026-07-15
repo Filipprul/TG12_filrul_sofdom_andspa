@@ -8,21 +8,23 @@ import java.awt.event.KeyEvent;
 public class gui {
     private GameController controller;
     private int schwarz = 0;
-
     private PApplet parent;
-    private int score = controller.getGrid().getScore();
+    private int score;
+
+    private final int cellSize = 47;
+    private final int gridSize = 18; // Aus deiner Grid.java
+    private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
+    private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
 
     public gui(PApplet p) {
         this.controller = new GameController(new Grid());
         this.parent = p;
+        this.score = controller.getGrid().getScore();
         this.controller.start();
     }
 
-    public void settings() {
-        parent.size(47 * 18 + 24, 47 * 18 + 32);
-    }
-
     public void draw() {
+        controller.getGrid().eat_food();
         if (parent.frameCount % 10 == 0) {
             controller.update();
             parent.background(0);
@@ -41,21 +43,27 @@ public class gui {
 
     void drawSnake() {
         var snake = controller.getGrid().getSnake();
-        parent.fill(255);
-        parent.circle(snake.get(0).get_x() * 47 + 34, snake.get(0).get_y() * 47 + 34, 45);
-        for(int i = 1; i < snake.size(); i++){
-            parent.fill(205,127,50);
-            parent.circle(snake.get(i).get_x() * 47 + 34, snake.get(i).get_y() * 47 + 34, 45);
+        for(int i = 0; i < snake.size(); i++){
+            var part = snake.get(i);
+            // Zentrierung: Offset + (Koordinate * Feldgröße) + halbe Feldgröße
+            float posX = offsetX + (part.get_x() * cellSize) + (cellSize / 2f);
+            float posY = offsetY + (part.get_y() * cellSize) + (cellSize / 2f);
+
+            parent.fill(i == 0 ? 255 : parent.color(205, 127, 50));
+            parent.circle(posX, posY, cellSize * 0.9f); // 0.9f lässt einen kleinen Rand
         }
     }
 
     void drawFood(){
         var cells = controller.getGrid().getGridSize();
-        for(int py = 0; py < 18; py++){
-            for(int px = 0; px < 18; px++){
+        controller.getGrid().spawn_food();
+        for(int py = 0; py < gridSize; py++){
+            for(int px = 0; px < gridSize; px++){
                 if(cells[py][px] != null && cells[py][px].get_value() == 2){
+                    float posX = offsetX + (px * cellSize) + (cellSize / 2f);
+                    float posY = offsetY + (py * cellSize) + (cellSize / 2f);
                     parent.fill(129, 0, 21);
-                    parent.circle(px * 47 + 34, py * 47 + 34, 30);
+                    parent.circle(posX, posY, cellSize * 0.6f); // Essen ist kleiner als Schlange
                 }
             }
         }
@@ -65,14 +73,17 @@ public class gui {
         for (int y = 0; y < ny; y++) {
             for (int x = 0; x < nx; x++) {
                 farbwechsel(firstColor, secondColor);
-                parent.rect(10 + x * size, 10 + y * size, size, size);
+                parent.rect(offsetX + (x * size), offsetY + (y * size), size, size);
             }
             farbwechsel(firstColor, secondColor);
         }
     }
+
     void drawScore(){
-        parent.text("Score:", 2, 47 * 18 + 4);
-        parent.text(score, 14, 47 * 18 + 4); // der abstand zum text ist vieleicht zu klein / nicht existent
+        int currentScore = controller.getGrid().getScore();
+        parent.fill(255);
+        parent.textSize(32);
+        parent.text("Score: " + currentScore, 500, 50); // der abstand zum text ist vieleicht zu klein / nicht existent
     }
 
     void farbwechsel(int firstColor, int secondColor) {

@@ -15,10 +15,12 @@ public class Grid {
     private Direction direction = Direction.UP;
     private int food_index = 0;
     private int max_food = 3;
-    private int score = 0;
+    private int score;
+    private int currentScore;
 
     public Grid (){
         spawn_snake();
+        this.score = currentScore;
     }
 
     public boolean check_colision(){ // checks if the snake hits itsef or the void/border of the map
@@ -46,7 +48,7 @@ public class Grid {
     }
 
     public void increaseScore(int increaseBy){
-        score = score + increaseBy;
+        currentScore = score + increaseBy;
     }
 
     public void spawn_snake(){
@@ -70,8 +72,8 @@ public class Grid {
     }
 
     public void snake_grow(){ // add a Body to the end of a Snake
-        int y = Snake.get(Snake.size()).get_previus_y();
-        int x = Snake.get(Snake.size()).get_previus_x();
+        int y = Snake.get(Snake.size() - 1).get_previus_y();
+        int x = Snake.get(Snake.size() - 1).get_previus_x();
         Snake.add(new Body(x, y, 1));
     }
 
@@ -123,11 +125,6 @@ public class Grid {
         for (Obj part : Snake) {
             int x = part.get_x();
             int y = part.get_y();
-            
-            // Grenzen prüfen, um Abstürze zu vermeiden
-            if (x >= 0 && x < grid_size[0].length && y >= 0 && y < grid_size.length) {
-                grid_size[y][x] = part;
-            }
         }
     }
 

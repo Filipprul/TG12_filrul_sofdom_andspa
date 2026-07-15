@@ -5,14 +5,14 @@ import view.login.login;
 import view.menu.highscoreAnzeige;
 
 public class Main extends PApplet {
-    enum State { LOGIN, HIGHSCORE, GAME }
+    enum State { LOGIN, HIGHSCORE, GAME, MENU}
     State currentState = State.LOGIN;
 
     login loginScreen;
     gui game;
     highscoreAnzeige highscoreScreen;
 
-    public void settings() {size(864, 872);
+    public void settings() {size(1000, 1000);
     }
 
     public void setup() {

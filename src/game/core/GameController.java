@@ -1,7 +1,7 @@
 package game.core;
 
 public class GameController {
-    private final Grid grid; // Speicherung Spielfeld
+    private final Grid grid;
     private boolean running = false;
 
     public GameController(Grid grid) {
@@ -9,23 +9,16 @@ public class GameController {
     }
 
     public void start() {
-        grid.spawn_snake();
-        grid.spawn_food();
-        grid.syncSnakeToGrid();
         running = true;
     }
 
     public void update() {
         if (!running) {return;}
-
         grid.snake_move();
         grid.syncSnakeToGrid();
-        grid.spawn_food();
-
         if (grid.check_colision()) {
             running = false;
         }
-        grid.eat_food();
     }
 
     public Grid getGrid() {return grid;}
