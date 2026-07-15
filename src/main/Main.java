@@ -24,7 +24,7 @@ public class Main extends PApplet {
         if (currentState == State.LOGIN) {
             loginScreen.draw();
             if (loginScreen.isLoggedIn()) {
-                currentState = State.GAME;
+                currentState = State.HIGHSCORE;
             }
         } else if (currentState == State.HIGHSCORE) {
             highscoreScreen.draw();

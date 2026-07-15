@@ -28,6 +28,11 @@ public class highscoreAnzeige {
         parent.fill(200, alpha);
         parent.text("-- | -- | --", parent.width/2, 300);
 
+        parent.textSize(24);
+        parent.fill(200, alpha);
+        parent.text("Drücke ENTER zum Starten", parent.width/2, 400);
+
+
         parent.stroke(100, alpha);
         parent.line(parent.width/2 - 100, 200, parent.width/2 + 100, 200);
     
