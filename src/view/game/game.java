@@ -15,8 +15,8 @@ public class game {
 
     private final int cellSize = 47;
     private final int gridSize = 18; // Aus deiner Grid.java
-    //private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
-    //private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
+    private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
+    private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
 
     public game(PApplet p) {
         this.controller = new GameController(new Grid());
@@ -92,10 +92,10 @@ public class game {
 
     // Ändere deine Variablen in der gui-Klasse zu dynamischen Methoden
     public int getOffsetX() {
-        return (parent.width - (gridSize * cellSize)) / 2; // Hier deine Grid-Größe
+        return (1000 - (18 * cellSize)) / 2; // Hier deine Grid-Größe
     }
     public int getOffsetY() {
-        return (parent.height - (gridSize * cellSize)) / 2;
+        return (1000 - (18 * cellSize)) / 2; // Hier deine Grid-Größe
     }   
 
     void drawGrid(int firstColor, int secondColor, int size, int nx, int ny) {

@@ -35,7 +35,8 @@ public class menu {
     }
     public void keyPressed(char key) {
         if (key == PApplet.ENTER || key == '\n' || key == '\r') {
-            highscoreVisible = true;}
+            highscoreVisible = true;
+        }
     }
 
     public boolean ishighscoreVisible() {
