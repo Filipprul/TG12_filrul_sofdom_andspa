@@ -1,4 +1,4 @@
-package view.menu;
+package view.Menu;
 import processing.core.PApplet;
 
 public class menu {

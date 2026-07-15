@@ -2,7 +2,7 @@ package main;
 import processing.core.PApplet;
 import view.game.game;
 import view.login.login;
-import view.menu.menu;
+import view.Menu.menu;
 import view.gameover.gameover;
 
 public class Main extends PApplet {
