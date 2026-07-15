@@ -16,12 +16,10 @@ public class Grid {
     private int food_index = 0;
     private int max_food = 3;
     private int score = 0;
-    private int currentScore = 0;
 
     public Grid (){
         spawn_snake();
         this.score = 0; // Starte bei 0
-        this.currentScore = 0; // Falls du die Variable behalten willst
     }
 
     public boolean check_colision(){ // checks if the snake hits itsef or the void/border of the map
@@ -40,17 +38,18 @@ public class Grid {
     public void eat_food(){ // executes the growth of the Snake and removes the "eaten" food
         int x = Snake.get(0).get_x();
         int y = Snake.get(0).get_y();
-        if (grid_size[y][x] != null && grid_size[y][x].get_value() == 2){
-            grid_size[y][x] = null; // Futter entfernen
-            food_index --;          // Futterindex verringern
-            snake_grow();           // Snake wachsen lassen
-            increaseScore(1);  // Score erhöhen
+        if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+            if (grid_size[y][x] != null && grid_size[y][x].get_value() == 2) {
+                grid_size[y][x] = null; // Futter entfernen
+                food_index--;          // Futterindex verringern
+                snake_grow();           // Snake wachsen lassen
+                increaseScore(1);  // Score erhöhen
+            }
         }
     }
 
     public void increaseScore(int increaseBy){
         this.score += increaseBy * 10;
-        //currentScore = score + increaseBy;
     }
 
     public void spawn_snake(){
@@ -137,6 +136,5 @@ public class Grid {
     public int getScore(){
         return score;
     }
-
 }
 
