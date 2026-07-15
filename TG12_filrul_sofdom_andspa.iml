@@ -9,6 +9,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="core-4.5.2" level="project" />
-    <orderEntry type="library" exported="" name="sqlite-jdbc-3.53.2.0-natives-all" level="project" />
+    <orderEntry type="library" exported="" scope="RUNTIME" name="sqlite-jdbc-3.53.2.0-natives-all" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-j-9.7.0" level="project" />
   </component>
 </module>
