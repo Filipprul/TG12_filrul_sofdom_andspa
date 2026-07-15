@@ -146,7 +146,6 @@ public class game {
     public void resetGame() {
         this.controller = new GameController(new Grid());
         this.controller.start();
-        this.schwarz
     }
 
     public GameController getController() {return this.controller;}
