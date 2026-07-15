@@ -7,9 +7,10 @@ import java.awt.event.KeyEvent;
 
 public class gui {
     private GameController controller;
+    //private Grid grid;
     private int schwarz = 0;
     private PApplet parent;
-    private int score = getScore();
+    private int score = controller.getGrid().getScore();
 
     public gui(PApplet p) {
         this.controller = new GameController(new Grid());
