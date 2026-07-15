@@ -2,6 +2,7 @@ package view.Menu;
 import processing.core.PApplet;
 
 public class highscoreAnzeige {
+
     private boolean highscoreVisible = false;
     private PApplet parent;
     private int alpha = 0;
@@ -29,11 +30,16 @@ public class highscoreAnzeige {
 
         parent.stroke(100, alpha);
         parent.line(parent.width/2 - 100, 200, parent.width/2 + 100, 200);
+    
         
     }
     public void keyPressed(char key) {
         if (key == PApplet.ENTER || key == '\n' || key == '\r') {
             highscoreVisible = true;}
+    }
+
+    public boolean ishighscoreVisible() {
+        return highscoreVisible;
     }
 
 }

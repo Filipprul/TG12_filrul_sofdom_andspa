@@ -38,7 +38,8 @@ public class login {
 
     public void keyPressed(char key) {
         if (key == PApplet.ENTER || key == '\n' || key == '\r') {
-            loggedIn = true;}
+            loggedIn = true;
+        }
     }
 
     public boolean isLoggedIn() {

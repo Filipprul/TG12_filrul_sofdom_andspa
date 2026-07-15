@@ -5,7 +5,7 @@ import view.login.login;
 import view.Menu.highscoreAnzeige;
 
 public class Main extends PApplet {
-    enum State { LOGIN, GAME }
+    enum State { LOGIN, HIGHSCORE, GAME }
     State currentState = State.LOGIN;
 
     login loginScreen;
@@ -26,13 +26,24 @@ public class Main extends PApplet {
             if (loginScreen.isLoggedIn()) {
                 currentState = State.GAME;
             }
-        } else {game.draw();}
+        } else if (currentState == State.HIGHSCORE) {
+            highscoreScreen.draw();
+            if (highscoreScreen.ishighscoreVisible()) {
+                currentState = State.GAME;
+            }
+        } else {
+            game.draw();
+        }
     }
 
     public void keyPressed() {
         if (currentState == State.LOGIN) {
             loginScreen.keyPressed(key);
-        } else {game.keyPressed(key);}
+        } else if (currentState == State.HIGHSCORE) {
+            highscoreScreen.keyPressed(key);
+        } else {
+            game.keyPressed(key);
+        }
     }
 
     public static void main(String[] args) {PApplet.main("main.Main");}
