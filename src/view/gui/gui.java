@@ -19,7 +19,7 @@ public class gui {
     }
 
     public void settings() {
-        parent.size(47 * 18 + 32, 47 * 18 + 24);
+        parent.size(47 * 18 + 24, 47 * 18 + 32);
     }
 
     public void draw() {

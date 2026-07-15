@@ -12,7 +12,8 @@ public class Main extends PApplet {
     gui game;
     highscoreAnzeige highscoreScreen;
 
-    public void settings() {size(872, 864);}
+    public void settings() {size(864, 872);
+    }
 
     public void setup() {
         loginScreen = new login(this);

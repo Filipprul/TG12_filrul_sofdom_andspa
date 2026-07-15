@@ -11,7 +11,7 @@ public class highscoreAnzeige {
         this.parent = p;
     }
 
-    public void settings() {parent.size(47 * 18 + 32, 47 * 18 + 24);}
+    public void settings() {parent.size(47 * 18 + 24, 47 * 18 + 32);}
 
     public void draw() {
         parent.background(20);

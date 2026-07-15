@@ -13,7 +13,7 @@ public class login {
 
     public login(PApplet p) {this.parent = p;}
 
-    public void settings() {parent.size(47 * 18 + 32, 47 * 18 + 24);}
+    public void settings() {parent.size(47 * 18 + 24, 47 * 18 + 32);}
 
     // draw() ausbessern/verbessern!
     public void draw() {
