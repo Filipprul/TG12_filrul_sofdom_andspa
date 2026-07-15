@@ -70,8 +70,8 @@ public class Grid {
     }
 
     public void snake_grow(){ // add a Body to the end of a Snake
-        int y = Snake.get(Snake.size()-1).get_previus_y();
-        int x = Snake.get(Snake.size()-1).get_previus_x();
+        int y = Snake.get(Snake.size()).get_previus_y();
+        int x = Snake.get(Snake.size()).get_previus_x();
         Snake.add(new Body(x, y, 1));
     }
 

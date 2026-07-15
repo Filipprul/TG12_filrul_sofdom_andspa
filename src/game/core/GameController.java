@@ -20,6 +20,7 @@ public class GameController {
 
         grid.snake_move();
         grid.syncSnakeToGrid();
+        grid.spawn_food();
 
         if (grid.check_colision()) {
             running = false;
