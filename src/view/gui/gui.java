@@ -27,17 +27,21 @@ public class gui {
         controller.getGrid().eat_food();
         if (parent.frameCount % 10 == 0) {
             controller.update();
+        }
+        if(controller.isRunning()){
             parent.background(0);
             drawGrid(parent.color(0xffa9e53d), parent.color(0xff2fd710), 47, 18, 18);
             drawSnake();
             drawFood();
-            drawScore();
         }
+        drawScore();
 
         if (!controller.isRunning()) {
             // 1. Hintergrund-Rechteck zeichnen
             parent.rectMode(PApplet.CENTER); // Damit das Rechteck zentriert wird
-            parent.fill(0, 255);             // Schwarz mit 150/255 Transparenz
+            parent.fill(0, 255
+
+            );             // Schwarz mit 150/255 Transparenz
             parent.noStroke();               // Kein Rahmen um das Rechteck
             // Zeichne ein Rechteck hinter dem Text (Breite 300, Höhe 60)
             parent.rect(parent.width/2, 450, 300, 60, 10); // Die 10 sorgt für abgerundete Ecken
@@ -88,8 +92,14 @@ public class gui {
         }
     }
 
+    public int getScore() {
+        return score;
+    }
+
     void drawScore(){
         int currentScore = controller.getGrid().getScore();
+        System.out.println("DEBUG - Aktueller Score im Grid: " + currentScore); // <--- HIER
+        
         parent.fill(255);
         parent.textSize(32);
         parent.text("Score: " + currentScore, 500, 50); // der abstand zum text ist vieleicht zu klein / nicht existent

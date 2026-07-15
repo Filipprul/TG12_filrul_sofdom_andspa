@@ -15,12 +15,13 @@ public class Grid {
     private Direction direction = Direction.UP;
     private int food_index = 0;
     private int max_food = 3;
-    private int score;
-    private int currentScore;
+    private int score = 0;
+    private int currentScore = 0;
 
     public Grid (){
         spawn_snake();
-        this.score = currentScore;
+        this.score = 0; // Starte bei 0
+        this.currentScore = 0; // Falls du die Variable behalten willst
     }
 
     public boolean check_colision(){ // checks if the snake hits itsef or the void/border of the map
@@ -48,6 +49,7 @@ public class Grid {
     }
 
     public void increaseScore(int increaseBy){
+        //this.score += increaseBy;
         currentScore = score + increaseBy;
     }
 
