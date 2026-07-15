@@ -1,4 +1,4 @@
-package view.Menu;
+package view.menu;
 import processing.core.PApplet;
 
 public class highscoreAnzeige {

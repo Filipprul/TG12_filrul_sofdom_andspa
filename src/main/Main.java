@@ -2,7 +2,7 @@ package main;
 import processing.core.PApplet;
 import view.gui.gui;
 import view.login.login;
-import view.Menu.highscoreAnzeige;
+import view.menu.highscoreAnzeige;
 
 public class Main extends PApplet {
     enum State { LOGIN, HIGHSCORE, GAME }
