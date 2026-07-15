@@ -4,6 +4,7 @@ import view.game.game;
 import view.login.login;
 import view.Menu.menu;
 import view.gameover.gameover;
+import view.register.register;
 
 public class Main extends PApplet {
     public enum State { LOGIN, MENU, GAME, REGISTER, GAMEOVER}
@@ -13,6 +14,7 @@ public class Main extends PApplet {
     game gameScreen;
     menu menuScreen;
     gameover gameoverScreen;
+    register registerScreen;
 
     public void settings() {size(1000, 1000);}
 
@@ -21,6 +23,7 @@ public class Main extends PApplet {
         gameScreen = new game(this);
         menuScreen = new menu(this);
         gameoverScreen = new gameover(this);
+        registerScreen = new register(this);
     }
 
     public void draw() {
@@ -42,6 +45,9 @@ public class Main extends PApplet {
             case GAMEOVER:
                 gameoverScreen.over(gameScreen.getController().getGrid().getScore());
                 break;
+            case REGISTER:
+                registerScreen.draw();
+                break;
         }
     }
 
@@ -55,9 +61,15 @@ public class Main extends PApplet {
                 currentState = State.MENU;}
         }
 
-        if (currentState == State.LOGIN) {loginScreen.keyPressed(key);
-        } else if (currentState == State.MENU) {menuScreen.keyPressed(key);
-        } else {gameScreen.keyPressed(key);}
+        if (currentState == State.LOGIN) {
+            loginScreen.keyPressed(key);
+        } else if (currentState == State.MENU) {
+            menuScreen.keyPressed(key);
+        } else if (currentState == State.REGISTER) {
+            registerScreen.keyPressed(key);
+        } else {
+            gameScreen.keyPressed(key);
+        }
     }
 
     public void setState(State state){currentState = state;}
