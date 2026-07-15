@@ -49,8 +49,8 @@ public class Grid {
     }
 
     public void increaseScore(int increaseBy){
-        //this.score += increaseBy;
-        currentScore = score + increaseBy;
+        this.score += increaseBy * 10;
+        //currentScore = score + increaseBy;
     }
 
     public void spawn_snake(){

@@ -56,15 +56,34 @@ public class gui {
 
     void drawSnake() {
         var snake = controller.getGrid().getSnake();
-        for(int i = 0; i < snake.size(); i++){
-            var part = snake.get(i);
-            // Zentrierung: Offset + (Koordinate * Feldgröße) + halbe Feldgröße
-            float posX = offsetX + (part.get_x() * cellSize) + (cellSize / 2f);
-            float posY = offsetY + (part.get_y() * cellSize) + (cellSize / 2f);
+    parent.noStroke();
+    
+    for(int i = 0; i < snake.size(); i++){
+        var part = snake.get(i);
+        float posX = offsetX + (part.get_x() * cellSize) + (cellSize / 2f);
+        float posY = offsetY + (part.get_y() * cellSize) + (cellSize / 2f);
 
-            parent.fill(i == 0 ? 255 : parent.color(205, 127, 50));
-            parent.circle(posX, posY, cellSize * 0.9f); // 0.9f lässt einen kleinen Rand
+        // 1. Glow-Effekt (Schein nach außen)
+        parent.fill(255, 255, 255, 100);
+        parent.circle(posX, posY, cellSize * 1.1f);
+
+        // 2. Körper mit Farb-Abstufung (wird nach hinten dunkler/rötlicher)
+        if (i == 0) {
+            // Kopf
+            parent.fill(255, 255, 0); // Gelber Kopf
+            parent.circle(posX, posY, cellSize * 0.9f);
+            
+            // Augen
+            parent.fill(0);
+            parent.circle(posX - 8, posY - 5, 6);
+            parent.circle(posX + 8, posY - 5, 6);
+        } else {
+            // Körper
+            int red = PApplet.constrain(150 + (i * 3), 150, 220);
+            parent.fill(red, 100, 50);
+            parent.circle(posX, posY, cellSize * 0.85f);
         }
+    }
     }
 
     void drawFood(){
