@@ -1,17 +1,14 @@
 package view.menu;
 import processing.core.PApplet;
 
-public class highscoreAnzeige {
-
+public class menu {
     private boolean highscoreVisible = false;
     private PApplet parent;
     private int alpha = 0;
 
-    public highscoreAnzeige(PApplet p) {
+    public menu(PApplet p) {
         this.parent = p;
     }
-
-    public void settings() {parent.size(47 * 18 + 24, 47 * 18 + 32);}
 
     public void draw() {
         parent.background(20);
@@ -35,8 +32,6 @@ public class highscoreAnzeige {
 
         parent.stroke(100, alpha);
         parent.line(parent.width/2 - 100, 200, parent.width/2 + 100, 200);
-    
-        
     }
     public void keyPressed(char key) {
         if (key == PApplet.ENTER || key == '\n' || key == '\r') {
@@ -47,4 +42,5 @@ public class highscoreAnzeige {
         return highscoreVisible;
     }
 
+    public void resetMenu() {this.highscoreVisible = false;}
 }
