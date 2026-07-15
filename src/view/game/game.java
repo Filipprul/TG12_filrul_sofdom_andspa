@@ -15,8 +15,8 @@ public class game {
 
     private final int cellSize = 47;
     private final int gridSize = 18; // Aus deiner Grid.java
-    private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
-    private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
+    //private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
+    //private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
 
     public game(PApplet p) {
         this.controller = new GameController(new Grid());
@@ -146,6 +146,7 @@ public class game {
     public void resetGame() {
         this.controller = new GameController(new Grid());
         this.controller.start();
+        this.schwarz
     }
 
     public GameController getController() {return this.controller;}
