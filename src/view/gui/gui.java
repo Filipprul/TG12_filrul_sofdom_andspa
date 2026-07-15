@@ -9,6 +9,7 @@ public class gui {
     private GameController controller;
     private int schwarz = 0;
     private PApplet parent;
+    private int score = getScore();
 
     public gui(PApplet p) {
         this.controller = new GameController(new Grid());
@@ -17,7 +18,7 @@ public class gui {
     }
 
     public void settings() {
-        parent.size(47 * 18 + 24, 47 * 18 + 24);
+        parent.size(47 * 18 + 32, 47 * 18 + 24);
     }
 
     public void draw() {
@@ -27,6 +28,7 @@ public class gui {
             drawGrid(parent.color(0xffa9e53d), parent.color(0xff2fd710), 47, 18, 18);
             drawSnake();
             drawFood();
+            drawScore();
         }
 
         if (!controller.isRunning()) {
@@ -66,6 +68,10 @@ public class gui {
             }
             farbwechsel(firstColor, secondColor);
         }
+    }
+    void drawScore(){
+        parent.text("Score:", 2, 47 * 18 + 4);
+        parent.text(score, 14, 47 * 18 + 4); // der abstand zum text ist vieleicht zu klein / nicht existent
     }
 
     void farbwechsel(int firstColor, int secondColor) {

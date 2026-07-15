@@ -46,7 +46,7 @@ public class Grid {
     }
 
     public void increaseScore(int increaseBy){
-        score += increaseBy;
+        score = score + increaseBy;
     }
 
     public void spawn_snake(){
@@ -134,5 +134,10 @@ public class Grid {
     public ArrayList<Obj> getSnake() {return Snake;}
 
     public Obj[][] getGridSize() {return grid_size;}
+
+    public int getScore(){
+        return score;
+    }
+
 }
 
