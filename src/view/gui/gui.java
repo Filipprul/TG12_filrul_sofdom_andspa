@@ -35,9 +35,18 @@ public class gui {
         }
 
         if (!controller.isRunning()) {
+            // 1. Hintergrund-Rechteck zeichnen
+            parent.rectMode(PApplet.CENTER); // Damit das Rechteck zentriert wird
+            parent.fill(0, 255);             // Schwarz mit 150/255 Transparenz
+            parent.noStroke();               // Kein Rahmen um das Rechteck
+            // Zeichne ein Rechteck hinter dem Text (Breite 300, Höhe 60)
+            parent.rect(parent.width/2, 450, 300, 60, 10); // Die 10 sorgt für abgerundete Ecken
+
+            // 2. Text zeichnen
+            parent.textAlign(PApplet.CENTER, PApplet.CENTER);
             parent.fill(255, 0, 0);
             parent.textSize(32);
-            parent.text("Game Over", 100, 200);
+            parent.text("Game Over", parent.width/2, 450);
         }
     }
 
