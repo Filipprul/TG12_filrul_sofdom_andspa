@@ -1,114 +1,60 @@
-package view.Menu;
+package view.menu;
 
-import game.objects.Highscore;
 import game.objects.Player;
+import main.Main;
 import processing.core.PApplet;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
 public class menu {
+    private Main main;
     private boolean highscoreVisible = false;
     private final PApplet parent;
-    private int alpha = 0;
-    private final List<Highscore> highscores = new ArrayList<>();
-    private String currentUsername = "Spieler";
+    private Player currentPlayer;
 
     public menu(PApplet p) {
         this.parent = p;
+        this.main = (Main) p;
     }
 
     public void draw() {
-        parent.background(20);
-        if (alpha < 255) alpha += 5;
-        
-        // 1. Überschrift
+        parent.background(0); // Schwarzer Hintergrund
+
+        // 1. Weiße Box mit lila Rahmen
+        parent.rectMode(PApplet.CENTER);
+        parent.fill(255);
+        parent.rect(parent.width / 2, parent.height / 2, 700, 700);
+
+        // 2. Spielername
+        parent.fill(0);
         parent.textAlign(PApplet.CENTER, PApplet.CENTER);
-        parent.fill(0, 50);
         parent.textSize(64);
-        parent.text("HIGHSCORES", parent.width / 2 + 4, 84);
-        parent.fill(255, alpha);
-        parent.text("HIGHSCORES", parent.width / 2, 80);
+        String name = (currentPlayer != null) ? currentPlayer.getUsername() : "PLAYER";
+        parent.text(name, parent.width / 2, 250);
 
-        // 2. Highscore-Tabelle
-        if (highscores.isEmpty()) {
-            parent.fill(150, alpha);
-            parent.textSize(22);
-            parent.text("Noch keine Einträge gespeichert", parent.width / 2, 250);
-        } else {
-            int startY = 180;
-            int rowHeight = 45;
-            parent.rectMode(PApplet.CENTER);
+        // 3. Highscore "Button"
+        parent.noStroke();
+        parent.fill(40);
+        parent.rect(parent.width / 2, 500, 400, 60, 15);
 
-            for (int i = 0; i < Math.min(highscores.size(), 5); i++) {
-                Highscore entry = highscores.get(i);
-                int yPos = startY + (i * rowHeight);
+        parent.fill(255);
+        parent.textSize(32);
+        int score = (currentPlayer != null) ? currentPlayer.getHighscore() : 0;
+        parent.text("HIGHSCORE: " + score, parent.width / 2, 500);
 
-                // Hintergrund der Zeile
-                parent.noStroke();
-                parent.fill(255, 15);
-                parent.rect(parent.width / 2, yPos, 360, 40, 5);
-
-                // Text: Platzierung, Name, Score
-                parent.fill(255, alpha);
-                parent.textSize(22);
-                
-                // Nummer
-                parent.textAlign(PApplet.LEFT, PApplet.CENTER);
-                parent.text((i + 1) + ".", parent.width / 2 - 160, yPos);
-                
-                // Name
-                parent.text(entry.getUsername(), parent.width / 2 - 120, yPos);
-                
-                // Score
-                parent.textAlign(PApplet.RIGHT, PApplet.CENTER);
-                parent.text(entry.getScore(), parent.width / 2 + 160, yPos);
-            }
-        }
-
-        // 3. Footer
-        parent.textAlign(PApplet.CENTER, PApplet.CENTER);
-        parent.textSize(20);
-        parent.fill(120, alpha);
-        parent.text("Drücke ENTER zum Starten", parent.width / 2, 450);
+        // 4. "GAME" Text
+        parent.fill(0);
+        parent.textSize(48);
+        parent.text("GAME", parent.width / 2, 650);
     }
 
-    public void keyPressed(char key) {
-        if (key == PApplet.ENTER || key == '\n' || key == '\r') {
-            highscoreVisible = true;
+    public void mousePressed() {
+        if (parent.mouseX > (parent.width/2 - 100) && parent.mouseX < (parent.width/2 + 100) &&
+                parent.mouseY > 600 && parent.mouseY < 700) {
+
+            highscoreVisible = true; // Löst in Main den Wechsel zu State.GAME aus
         }
     }
 
-    public boolean ishighscoreVisible() {
-        return highscoreVisible;
-    }
-
-    public void resetMenu() {
-        this.highscoreVisible = false;
-    }
-
-    public void addHighscore(String username, int score) {
-        if (username == null || username.trim().isEmpty()) {
-            username = currentUsername;
-        }
-        if (score <= 0) return;
-
-        highscores.add(new Highscore(new Player(0, username.trim(), "", score), score));
-        highscores.sort(Comparator.comparingInt(Highscore::getScore).reversed());
-        
-        if (highscores.size() > 10) {
-            highscores.subList(10, highscores.size()).clear();
-        }
-    }
-
-    public List<Highscore> getHighscores() {
-        return highscores;
-    }
-
-    public void setCurrentUsername(String username) {
-        if (username != null && !username.trim().isEmpty()) {
-            this.currentUsername = username.trim();
-        }
-    }
+    public boolean ishighscoreVisible() { return highscoreVisible; }
+    public void resetMenu() { this.highscoreVisible = false; }
+    public void setCurrentPlayer(Player p) { this.currentPlayer = p; }
 }
