@@ -128,16 +128,6 @@ public class game {
         parent.text("Score: " + currentScore, 500, 50); // der abstand zum text ist vieleicht zu klein / nicht existent
     }
 
-    void farbwechsel(int firstColor, int secondColor) {
-        if (schwarz == 0) {
-            parent.fill(firstColor);
-            schwarz = 1;
-        } else {
-            parent.fill(secondColor);
-            schwarz = 0;
-        }
-    }
-
     public void keyPressed(char k) {
         if (k == 'w' || k == 'W') {controller.getGrid().setDirection(Direction.UP);
         } else if (k == 's' || k == 'S') {controller.getGrid().setDirection(Direction.DOWN);

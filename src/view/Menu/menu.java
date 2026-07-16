@@ -1,5 +1,4 @@
 package view.menu;
-
 import game.objects.Player;
 import main.Main;
 import processing.core.PApplet;

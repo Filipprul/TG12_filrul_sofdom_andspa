@@ -14,7 +14,7 @@ public class Grid {
     private final Obj[][] grid_size = new Obj[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
     private Direction direction = Direction.UP;
     private int food_index = 0;
-    private int max_food = 1;
+    private int max_food = 3;
     private int score = 0;
     private int foodX = -1;
     private int foodY = -1;
@@ -108,17 +108,6 @@ public class Grid {
         if (direction == null) {return;}
         if (direction.isOpposite(this.direction)) {return;}
         this.direction = direction;
-    }
-
-    public void setDirection(String input){
-        if (input == null) {return;}
-        switch (input.toLowerCase()) {
-            case "up" -> setDirection(Direction.UP);
-            case "down" -> setDirection(Direction.DOWN);
-            case "left" -> setDirection(Direction.LEFT);
-            case "right" -> setDirection(Direction.RIGHT);
-            default -> {}
-        }
     }
 
     public void snake_move(){

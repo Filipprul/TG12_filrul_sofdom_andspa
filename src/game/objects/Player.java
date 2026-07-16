@@ -15,9 +15,6 @@ public class Player {
 
     public int getId() {return id;}
     public String getUsername() {return username;}
-    public String getPasswort() {return passwort;}
     public int getHighscore() {return highscore;}
-
-    public void setPasswort(String passwort) {this.passwort = passwort;}
     public void setHighscore(int score) {this.highscore = score;}
 }

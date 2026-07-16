@@ -8,7 +8,6 @@ import game.core.Constants;
 
 // Verwaltet die gesamte Kommunikation zwischen der Anwendung und der MySQL-Datenbank
 public class DatabaseConnector {
-
     // Erstellt eine neue Verbindung zur Datenbank basierend auf den Einstellungen in Constants
     private Connection getConnection() throws SQLException {
         return DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PASS);
