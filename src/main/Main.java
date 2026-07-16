@@ -1,20 +1,19 @@
 package main;
+import game.objects.Player;
 import processing.core.PApplet;
 import view.game.game;
 import view.login.login;
-import view.Menu.menu;
+import view.menu.menu;
 import view.gameover.gameover;
-import view.register.register;
 
 public class Main extends PApplet {
-    public enum State { LOGIN, MENU, GAME, REGISTER, GAMEOVER}
+    public enum State { LOGIN, MENU, GAME, GAMEOVER}
     State currentState = State.LOGIN;
 
     login loginScreen;
     game gameScreen;
     menu menuScreen;
     gameover gameoverScreen;
-    register registerScreen;
 
     public void settings() {size(1000, 1000);}
 
@@ -23,7 +22,6 @@ public class Main extends PApplet {
         gameScreen = new game(this);
         menuScreen = new menu(this);
         gameoverScreen = new gameover(this);
-        registerScreen = new register(this);
     }
 
     public void draw() {
@@ -31,7 +29,8 @@ public class Main extends PApplet {
             case LOGIN:
                 loginScreen.draw();
                 if (loginScreen.isLoggedIn()) {
-                    menuScreen.setCurrentUsername(loginScreen.getCurrentUsername());
+                    Player p = loginScreen.getCurrentPlayer();
+                    menuScreen.setCurrentPlayer(p);
                     currentState = State.MENU;
                 }
                 break;
@@ -46,39 +45,56 @@ public class Main extends PApplet {
                 gameScreen.draw();
                 break;
             case GAMEOVER:
-                gameoverScreen.over(gameScreen.getController().getGrid().getScore());
-                break;
-            case REGISTER:
-                registerScreen.draw();
+                gameoverScreen.draw(gameScreen.getController().getGrid().getScore());
                 break;
         }
     }
 
     public void keyPressed() {
-        if (currentState == State.GAMEOVER){
-            if(key == 'r' || key == 'R'){
+        if (currentState == State.LOGIN) {
+            loginScreen.keyPressed(key);
+        } else if (currentState == State.GAMEOVER) {
+            if (key == 'r' || key == 'R') {
                 gameScreen.resetGame();
                 currentState = State.GAME;
             } else if (key == 'm' || key == 'M') {
                 gameScreen.resetGame();
-                currentState = State.MENU;}
-        }
-
-        if (currentState == State.LOGIN) {
-            loginScreen.keyPressed(key);
-        } else if (currentState == State.MENU) {
-            menuScreen.keyPressed(key);
-        } else if (currentState == State.REGISTER) {
-            registerScreen.keyPressed(key);
-        } else {
+                currentState = State.MENU;
+            }
+        } else if (currentState == State.GAME) {
             gameScreen.keyPressed(key);
+        }
+    }
+
+    public void mousePressed() {
+        switch (currentState) {
+            case LOGIN:
+                loginScreen.mousePressed();
+                break;
+            case MENU:
+                menuScreen.mousePressed();
+                break;
+            case GAMEOVER:
+                String action = gameoverScreen.mousePressed();
+                if ("RESTART".equals(action)) {
+                    gameScreen.resetGame();
+                    currentState = State.GAME;
+                } else if ("MENU".equals(action)) {
+                    gameScreen.resetGame();
+                    currentState = State.MENU;
+                }
+                break;
         }
     }
 
     public void setState(State state){currentState = state;}
 
     public void handleGameOver(int score) {
-        menuScreen.addHighscore(loginScreen != null ? loginScreen.getCurrentUsername() : "Spieler", score);
+        Player p = loginScreen.getCurrentPlayer();
+        if (score > p.getHighscore()) {
+            loginScreen.getDatabaseConnector().updateHighscore(p.getId(), score);
+            p.setHighscore(score);
+        }
         currentState = State.GAMEOVER;
     }
 
