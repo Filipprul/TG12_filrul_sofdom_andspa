@@ -44,6 +44,7 @@ public class login {
         drawButton(parent.width / 2 - 80, 380, 140, 40, "LOGIN");
         drawButton(parent.width / 2 + 80, 380, 140, 40, "REGISTER");
     }
+    
 
     private void drawInputField(int x, int y, String label, boolean isActive) {
         parent.rectMode(PApplet.CENTER);
