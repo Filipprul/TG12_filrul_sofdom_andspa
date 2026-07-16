@@ -22,34 +22,56 @@ public class menu {
     public void draw() {
         parent.background(20);
         if (alpha < 255) alpha += 5;
+        
+        // 1. Überschrift
         parent.textAlign(PApplet.CENTER, PApplet.CENTER);
-
         parent.fill(0, 50);
         parent.textSize(64);
-        parent.text("HIGHSCORES", parent.width/2 + 4, 154);
+        parent.text("HIGHSCORES", parent.width / 2 + 4, 84);
         parent.fill(255, alpha);
-        parent.text("HIGHSCORES", parent.width/2, 150);
+        parent.text("HIGHSCORES", parent.width / 2, 80);
 
-        parent.textSize(24);
-        parent.fill(200, alpha);
+        // 2. Highscore-Tabelle
         if (highscores.isEmpty()) {
-            parent.text("Noch keine Scores gespeichert", parent.width/2, 280);
+            parent.fill(150, alpha);
+            parent.textSize(22);
+            parent.text("Noch keine Einträge gespeichert", parent.width / 2, 250);
         } else {
-            parent.text("Top 5", parent.width/2, 250);
-            int startY = 285;
-            int lineHeight = 34;
+            int startY = 180;
+            int rowHeight = 45;
+            parent.rectMode(PApplet.CENTER);
+
             for (int i = 0; i < Math.min(highscores.size(), 5); i++) {
                 Highscore entry = highscores.get(i);
-                parent.text((i + 1) + ". " + entry.getUsername() + " - " + entry.getScore(), parent.width/2, startY + (i * lineHeight));
+                int yPos = startY + (i * rowHeight);
+
+                // Hintergrund der Zeile
+                parent.noStroke();
+                parent.fill(255, 15);
+                parent.rect(parent.width / 2, yPos, 360, 40, 5);
+
+                // Text: Platzierung, Name, Score
+                parent.fill(255, alpha);
+                parent.textSize(22);
+                
+                // Nummer
+                parent.textAlign(PApplet.LEFT, PApplet.CENTER);
+                parent.text((i + 1) + ".", parent.width / 2 - 160, yPos);
+                
+                // Name
+                parent.text(entry.getUsername(), parent.width / 2 - 120, yPos);
+                
+                // Score
+                parent.textAlign(PApplet.RIGHT, PApplet.CENTER);
+                parent.text(entry.getScore(), parent.width / 2 + 160, yPos);
             }
         }
 
+        // 3. Footer
+        parent.textAlign(PApplet.CENTER, PApplet.CENTER);
         parent.textSize(20);
-        parent.fill(200, alpha);
-        parent.text("Drücke ENTER zum Starten", parent.width/2, 440);
-
-        parent.stroke(100, alpha);
-        parent.line(parent.width/2 - 100, 200, parent.width/2 + 100, 200);
+        parent.fill(120, alpha);
+        parent.text("Drücke ENTER zum Starten", parent.width / 2, 450);
     }
 
     public void keyPressed(char key) {
@@ -62,7 +84,9 @@ public class menu {
         return highscoreVisible;
     }
 
-    public void resetMenu() {this.highscoreVisible = false;}
+    public void resetMenu() {
+        this.highscoreVisible = false;
+    }
 
     public void addHighscore(String username, int score) {
         if (username == null || username.trim().isEmpty()) {
@@ -72,6 +96,7 @@ public class menu {
 
         highscores.add(new Highscore(new Player(0, username.trim(), "", score), score));
         highscores.sort(Comparator.comparingInt(Highscore::getScore).reversed());
+        
         if (highscores.size() > 10) {
             highscores.subList(10, highscores.size()).clear();
         }
