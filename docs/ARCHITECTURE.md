@@ -4,238 +4,310 @@ Um dieses Markdown richtig zusehen werden diese Shritte benötigt:
 1. Markdown Preview Mermaid Support - Extension herunterladen.
 2. Mit `Strg + Shift + V` (Windows) oder `Cmd + Shift + V` (Mac) öffnen.
 
-## Jetzige Software-Architektur
-### Klassendiagramm
-Klassendiagramm der jetzigen Projektversion.
-
-```mermaid
-classDiagram
-    %% Vererbungshierarchie (game.objects)
-    class Objekt {
-        #int x
-        #int y
-        #int value
-        #int previus_x
-        #int previus_y
-        +get_value() int
-        +get_x() int
-        +get_y() int
-        +get_previus_x() int
-        +get_previus_y() int
-        +set_x(int x) void
-        +set_y(int y) void
-    }
-
-    class Head {
-        +up() void
-        +down() void
-        +left() void
-        +right() void
-    }
-
-    class Body {
-        +follow(Objekt vordermann) void
-    }
-
-    class Food {
-    }
-
-    Objekt <|-- Head
-    Objekt <|-- Body
-    Objekt <|-- Food
-
-    %% Kernlogik und Verwaltung (game.core)
-    class Grid {
-        -ArrayList~Objekt~ snake
-        -Obj[][] grid_size
-        -food_index
-        -max_food
-        +check_collision
-
-        +spawn_snake() void
-        +spawn_food() void
-        +snake_grow() void
-        +moveSnake() void
-    }
-
-    Grid "1" --> "*" Objekt : verwaltet
-
-    %% Menü und App-Start (menu / src)
-    class menu {
-        +getMenuScene(Stage primaryStage) Scene
-    }
-
-    class Main {
-        +start(Stage primaryStage) void
-        +main(String[] args) void
-    }
-
-    class TerminalGame {
-        - grid : Grid
-        + TerminalGame(grid : Grid)
-        + zeicheGrid() : void
-    }
-
-    Main --> menu : startet
-    menu ..> Grid : ruft auf (Zukunft)
-```
-
-## Finale Software-Architektur
-
-## Technischer Arbeitsablauf & Abhängigkeiten (Development Pipeline)
-
-```mermaid
-graph TD
-    %% Phase 1
-    A[#9 Spielfeld / Grid] -->|Basis für Schlangen-Daten| B[#18 Snake-Körper & Objekte]
-    B -->|Basis für Bewegung| C[#10 Snake-Bewegung]
-    
-    %% Phase 2
-    C -->|Liefert den Takt für die Bewegung| D[#15 Game-Loop]
-    E[#19 Core-Interfaces] -->|Definiert Eingabe-Schnittstelle| F[#16 Tastatursteuerung]
-    D -->|Verbindet Takt mit Steuerung| F
-    
-    %% Phase 3
-    F -->|Schlange kann gezielt gesteuert werden| G[#12 Food-Spawning]
-    G -->|Essen existiert im Raum| H[#11 Kollisionserkennung]
-    H -->|Kollisionen lösen Event aus| I[#13 Score-Logik & Wachstum]
-    
-    %% Phase 4
-    I -->|Terminal-Version läuft komplett| J[#14 Grafische Darstellung JavaFX]
-    J --> K[#4 Menü & Screens]
-    K --> L[#2 #3 #5 Zusatzfeatures]
-
-    style A fill:#f96,stroke:#333,stroke-width:2px
-    style B fill:#f96,stroke:#333,stroke-width:2px
-    style E fill:#f96,stroke:#333,stroke-width:2px
-```
-
-## Dynamischer Programmablauf (Runtime Sequence)
-Der zeitliche Ablauf des Spiels ist streng taktgesteuert (Tick-basiert) und wird vollständig vom `GameController` koordiniert. Dadurch wird eine saubere Synchronisation zwischen Benutzereingabe, physikalischer Berechnung und grafischer Anzeige erzwungen.
-
-### Der detaillierte Takt-Zyklus (Game Loop Step)
-Jeder einzelne Spielschritt durchläuft deterministisch die folgenden vier Phasen:
+## Sequenzdiagram Login eines Spielers
 
 ```mermaid
 sequenceDiagram
-    autonumber
-    participant U as Spieler (User)
-    participant C as GameController
-    participant M as Grid (Model)
-    participant V as GameView (Terminal/GUI)
+    participant U as User
+    participant LV as login
+    participant DB as DatabaseConnector
+    participant M as Main
+    
+    U->>LV: Eingabe (Benutzername & Passwort) & Klick (Anmelden)
+    activate LV
+    
+    LV->>DB: checkLogin(username, password)
+    activate DB
+    DB-->>LV: isValid : boolean
+    deactivate DB
 
-    U->>C: Drückt Richtungstaste (z.B. 'W' / Pfeiltaste Oben)
-    Note over C: Input wird asynchron abgefangen<br/>und Richtung (Direction) aktualisiert
+    alt Login erfolgreich
+        LV->>DB: getPlayer(username)
+        activate DB
+        DB-->>LV: Player instance
+        deactivate DB
+        LV->>LV: loggedIn = true
+    else Login fehlgeschlagen
+        LV->>DB: registerUser(username, password)
+        activate DB
+        DB-->>LV: isRegistered : boolean
+        deactivate DB
+        alt Registrierung erfolgreich
+            LV->>DB: getPlayer(username)
+            activate DB
+            DB-->>LV: Player instance
+            deactivate DB
+            LV->>LV: loggedIn = true
+        end
+    end
     
-    Note over C: Timer triggert nächsten Frame (Tick)
+    deactivate LV
     
-    C->>M: update()
+    M->>LV: isLoggedIn()
+    activate LV
+    LV-->>M: true
+    deactivate LV
+    
+    M->>LV: getCurrentPlayer()
+    activate LV
+    LV-->>M: Player-Objekt
+    deactivate LV
+    
+    M->>M: menuScreen.setCurrentPlayer(p)
+    M->>M: currentState = State.MENU
+```
+
+## Sequenzdiagramm Anzeige Highscore
+
+```mermaid
+sequenceDiagram
+    participant M as Main
+    participant MN as menu
+    participant P as Player
+
     activate M
-    Note over M: 1. Kopf bewegt sich<br/>2. Körpersegmente folgen<br/>3. Kollisionen prüfen
-    M-->>C: Liefert Spielzustand (isGameOver, Score)
+    M->>MN: setCurrentPlayer(p)
+    activate MN
+    MN->>P: getHighscore()
+    activate P
+    P-->>MN: int score
+    deactivate P
+    MN-->>M: Rendering Highscore
+
     deactivate M
-    
-    C->>V: render(grid)
-    activate V
-    Note over V: Liest aktuelle X/Y-Koordinaten<br/>und zeichnet das Spielfeld neu
-    V-->>C: Zeichnen abgeschlossen
-    deactivate V
+    deactivate MN
 ```
 
-## Inkrementeller Release-Plan (Versions-Roadmap)
+### UML-Klassendiagramm
 
 ```mermaid
-graph LR
-    %% Phasen-Definitionen
-    subgraph P1 [Phase 1: Das Fundament]
-        v01[v0.1: Alpha Engine<br/>'Unsichtbare Logik']
-    end
+classDiagram
+    %% Core
+    class Constants {
+        <<final>>
+        +String DB_URL
+        +String DB_USER
+        +String DB_PASS
+    }
 
-    subgraph P2 [Phase 2: Die Absicherung]
-        v10[v1.0: Terminal MVP<br/>'Voll spielbar im Terminal']
-    end
+    class Direction {
+        <<enumeration>>
+        UP
+        DOWN
+        LEFT
+        RIGHT
+        +isOpposite(Direction other) boolean
+    }
 
-    subgraph P3 [Phase 3: Das Ziel]
-        v20[v2.0: JavaFX GUI<br/>'Grafik & Screens']
-    end
+    class GameController {
+        -Grid grid
+        -boolean running
+        +GameController(Grid grid)
+        +start() void
+        +update() void
+        +getGrid() Grid
+        +isRunning() boolean
+    }
 
-    subgraph P4 [Phase 4: Offenes Ende]
-        v31[v3.1: Schwierigkeit]
-        v32[v3.2: Highscore]
-        v33[v3.3: Sound]
-    end
+    class Grid {
+        -int GRID_SIZE
+        -ArrayList~Obj~ Snake
+        -Obj[][] grid_size
+        -Direction direction
+        -int food_index
+        -int max_food
+        -int score
+        -int foodX
+        -int foodY
+        +Grid()
+        +check_colision() boolean
+        +eat_food() void
+        +increaseScore(int increaseBy) void
+        +spawn_snake() void
+        +spawn_food() void
+        -isCellFree(int x, int y) boolean
+        +snake_grow() void
+        +setDirection(Direction direction) void
+        +snake_move() void
+        +syncSnakeToGrid() void
+        +getSnake() ArrayList~Obj~
+        +getGridSize() Obj[][]
+        +getScore() int
+    }
 
-    %% Ablauf-Pfeile
-    v01 -->|Logik steht| v10
-    v10 -->|Meilenstein: Abgabe gesichert| v20
-    
-    %% Offenes Ende
-    v20 -->|Option 1| v31
-    v20 -->|Option 2| v32
-    v20 -->|Option 3| v33
+    %% Objects
+    class Obj {
+        -int x
+        -int y
+        -int value
+        -int previus_x
+        -int previus_y
+        +Obj(int x, int y, int value)
+        +get_value() int
+        +get_x() int
+        +get_y() int
+        +get_previus_y() int
+        +get_previus_x() int
+        +set_x(int x) void
+        +set_y(int y) void
+        +updatePreviousPosition() void
+    }
+
+    class Head {
+        +Head(int x, int y, int value)
+        +move(Direction direction) void
+    }
+
+    class Body {
+        +Body(int x, int y, int value)
+        +follow(Obj objekt) void
+    }
+
+    class Food {
+        +Food(int x, int y, int value)
+    }
+
+    class Player {
+        ~int id
+        ~String username
+        -String passwort
+        -int highscore
+        +Player(int id, String username, String passwort, int highscore)
+        +getId() int
+        +getUsername() String
+        +getHighscore() int
+        +setHighscore(int score) void
+    }
+
+    %% View (Ausschnitt)
+    class Main {
+        +enum State
+        -State currentState
+        -login loginScreen
+        -game gameScreen
+        -menu menuScreen
+        -gameover gameoverScreen
+        +settings() void
+        +setup() void
+        +draw() void
+        +keyPressed() void
+        +mousePressed() void
+        +setState(State state) void
+        +handleGameOver(int score) void
+    }
+
+    class DatabaseConnector {
+        -getConnection() Connection
+        +DatabaseConnector()
+        -hashPassword(String password) String
+        +registerUser(String username, String password) boolean
+        +checkLogin(String username, String password) boolean
+        +getPlayer(String username) Player
+        +updateHighscore(int playerId, int newScore) void
+    }
+
+    class login {
+        -int FIELD_WIDTH
+        -int FIELD_HEIGHT
+        -int BOX_SIZE
+        -boolean loggedIn
+        -PApplet parent
+        -Main main
+        -DatabaseConnector db
+        -String currentUsername
+        -String currentPassword
+        -boolean isUsernameActive
+        -Player currentPlayer
+        +login(PApplet p)
+        -attemptLogin() void
+        +draw() void
+        -drawDarkInputField(int x, int y, String label, boolean isActive) void
+        +keyPressed(char key) void
+        +mousePressed() void
+        -isMouseOver(int x, int y) boolean
+        +isLoggedIn() boolean
+        +getCurrentPlayer() Player
+        +getDatabaseConnector() DatabaseConnector
+    }
+
+    class menu {
+        -Main main
+        -boolean highscoreVisible
+        -PApplet parent
+        -Player currentPlayer
+        +menu(PApplet p)
+        +draw() void
+        +mousePressed() void
+        +ishighscoreVisible() boolean
+        +resetMenu() void
+        +setCurrentPlayer(Player p) void
+    }
+
+    class game {
+        -gameover gameover
+        -GameController controller
+        -int schwarz
+        -PApplet parent
+        -Main main
+        -int cellSize
+        -int gridSize
+        -int offsetX
+        -int offsetY
+        +game(PApplet p)
+        +draw() void
+        +drawSnake() void
+        +drawFood() void
+        +drawGrid(int firstColor, int secondColor, int size, int nx, int ny) void
+        +drawScore() void
+        +keyPressed(char k) void
+        +resetGame() void
+        +getController() GameController
+    }
+
+    class gameover {
+        -PApplet parent
+        +int RESTART_X
+        +int MENU_X
+        +int BUTTON_Y
+        +int BUTTON_W
+        +int BUTTON_H
+        +gameover(PApplet p)
+        +draw(int finalScore) void
+        +mousePressed() String
+    }
+
+    %% Vererbungsstruktur
+    Obj <|-- Head
+    Obj <|-- Body
+    Obj <|-- Food
+
+    %% Obj
+    Grid ..> Obj
+    Grid ..> Head
+    Grid ..> Food
+    Grid ..> Body
+
+    %% Grid
+    Main --> Player
+    Main *-- login
+    Main *-- menu
+    Main *-- game
+    Main *-- gameover
+
+    %% game
+    game *-- gameover
+    game *-- GameController
+    game --> Main
+    game --> Direction
+    game --> Grid
+
+    %% login
+    login *-- DatabaseConnector
+    login --> Main
+    login --> Player
+
+    %% menu
+    menu --> Main
+    menu --> Player
 ```
 
-## Ordnerstruktur
-
-```mermaid
-graph TD
-    %% Hauptverzeichnis
-    Root[TG12_FILRUL_SOFDOM_ANDSPA]
-    
-    %% Erste Ebene
-    Docs[docs]
-    Res[resources]
-    Src[src]
-    Gitignore[.gitignore]
-    Readme[README.md]
-    
-    Root --> Docs
-    Root --> Res
-    Root --> Src
-    Root --> Gitignore
-    Root --> Readme
-    Root --> LICENSE
-
-    %% Docs Ebene
-    Docs --> Arch[ARCHITECTURE.md]
-    Docs --> Req[REQUIREMENTS.md]
-    Docs --> Mgmt[MANAGEMENT.md]
-
-    %% Resources Ebene
-    Res --> Audio[audio]
-    Res --> Img[images]
-
-    %% Src Ebene
-    Src --> Main[Main.java]
-    Src --> Game[game]
-    Src --> Menu[menu]
-    Src --> View[view]
-
-    %% Game Unterordner
-    Game --> Core[core]
-    Game --> Obj[objects]
-
-    %% Core Klassen
-    Core --> GC[GameController.java]
-    Core --> Grid[Grid.java]
-
-    %% Objects Klassen
-    Obj --> BaseObj[Objekt.java]
-    Obj --> Head[Head.java]
-    Obj --> Body[Body.java]
-    Obj --> Food[Food.java]
-
-    %% Menu Klassen
-    Menu --> MenuClass[menu.java]
-
-    %% View Klassen
-    View --> ViewInt[GameView.java]
-    View --> TermView[TerminalView.java]
-    View --> FXView[JavaFXView.java]
-
-    %% Styling für die Übersicht
-    style Root fill:#4CAF50,stroke:#333,stroke-width:2px,color:#fff
-    style Src fill:#2196F3,stroke:#333,color:#fff
-    style Docs fill:#9C27B0,stroke:#333,color:#fff
-    style Res fill:#FF9800,stroke:#333,color:#fff
-```
