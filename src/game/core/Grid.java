@@ -10,16 +10,19 @@ import java.util.Random;
 public class Grid {
 
     private static final int GRID_SIZE = 18;
-    private ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
+    private final ArrayList<Obj> Snake = new ArrayList<>(); // all data about the Snake "head","body","position"...
     private final Obj[][] grid_size = new Obj[GRID_SIZE][GRID_SIZE]; // game board size 16 * 16
     private Direction direction = Direction.UP;
     private int food_index = 0;
-    private int max_food = 3;
+    private int max_food = 1;
     private int score = 0;
+    private int foodX = -1;
+    private int foodY = -1;
 
     public Grid (){
         spawn_snake();
         this.score = 0; // Starte bei 0
+        spawn_food();
     }
 
     public boolean check_colision(){ // checks if the snake hits itsef or the void/border of the map
@@ -35,15 +38,18 @@ public class Grid {
         return false;
     }
 
-    public void eat_food(){ // executes the growth of the Snake and removes the "eaten" food
+    public void eat_food(){
         int x = Snake.get(0).get_x();
         int y = Snake.get(0).get_y();
         if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
-            if (grid_size[y][x] != null && grid_size[y][x].get_value() == 2) {
-                grid_size[y][x] = null; // Futter entfernen
-                food_index--;          // Futterindex verringern
-                snake_grow();           // Snake wachsen lassen
-                increaseScore(1);  // Score erhöhen
+            if (foodX == x && foodY == y) {
+                foodX = -1;
+                foodY = -1;
+                food_index = Math.max(0, food_index - 1);
+                grid_size[y][x] = null;
+                snake_grow();
+                increaseScore(1);
+                spawn_food();
             }
         }
     }
@@ -58,18 +64,38 @@ public class Grid {
         Snake.add(new Body(7, 8, 1));
     }
 
-    public void spawn_food(){ // randomly spawn a food obj on the grid
+    public void spawn_food(){
+        if (food_index >= max_food) {
+            return;
+        }
+
         Random random = new Random();
-        if (food_index < max_food +1){
-            int x = random.nextInt(GRID_SIZE); // ArrayIndexOutOfBoundsException Problem weil random.nextInt(GRID_SIZE) 0-17 liefert und grid_size[18][18] nur 0-17 hat
+        for (int i = 0; i < 100; i++) {
+            int x = random.nextInt(GRID_SIZE);
             int y = random.nextInt(GRID_SIZE);
-            if (grid_size[y][x] != null && (grid_size[y][x].get_value() == 2 || grid_size[y][x].get_value() == 1)) {
-                spawn_food();
-            } else {
+            if (isCellFree(x, y)) {
                 grid_size[y][x] = new Food(x, y, 2);
+                foodX = x;
+                foodY = y;
                 food_index++;
+                return;
             }
         }
+    }
+
+    private boolean isCellFree(int x, int y) {
+        if (x < 0 || x >= GRID_SIZE || y < 0 || y >= GRID_SIZE) {
+            return false;
+        }
+        if (grid_size[y][x] != null) {
+            return false;
+        }
+        for (Obj part : Snake) {
+            if (part.get_x() == x && part.get_y() == y) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void snake_grow(){ // add a Body to the end of a Snake
@@ -111,21 +137,24 @@ public class Grid {
     }
 
     public void syncSnakeToGrid() {
-        // 1. Das Gitter von der alten Schlange säubern
         for (int y = 0; y < grid_size.length; y++) {
             for (int x = 0; x < grid_size[0].length; x++) {
-                // Wir löschen nur, wenn es ein Schlangenteil ist (value 1 oder 3)
-                // Essen (value 2) lassen wir in Ruhe!
                 if (grid_size[y][x] != null && grid_size[y][x].get_value() != 2) {
                     grid_size[y][x] = null;
                 }
             }
         }
 
-        // 2. Die aktuelle Schlange aus der Liste in das Gitter zeichnen
         for (Obj part : Snake) {
             int x = part.get_x();
             int y = part.get_y();
+            if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
+                grid_size[y][x] = part;
+            }
+        }
+
+        if (foodX >= 0 && foodY >= 0 && foodX < GRID_SIZE && foodY < GRID_SIZE) {
+            grid_size[foodY][foodX] = new Food(foodX, foodY, 2);
         }
     }
 

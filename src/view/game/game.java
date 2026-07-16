@@ -76,16 +76,31 @@ public class game {
     }
     }
 
-    void drawFood(){
+    void drawFood() {
         var cells = controller.getGrid().getGridSize();
-        controller.getGrid().spawn_food();
-        for(int py = 0; py < gridSize; py++){
-            for(int px = 0; px < gridSize; px++){
-                if(cells[py][px] != null && cells[py][px].get_value() == 2){
+        
+        // Pulsierender Wert für Animation
+        float pulse = PApplet.sin(parent.frameCount * 0.1f) * 0.1f;
+        float sizeModifier = 1.0f + pulse;
+
+        for (int py = 0; py < gridSize; py++) {
+            for (int px = 0; px < gridSize; px++) {
+                if (cells[py][px] != null && cells[py][px].get_value() == 2) {
                     float posX = offsetX + (px * cellSize) + (cellSize / 2f);
                     float posY = offsetY + (py * cellSize) + (cellSize / 2f);
-                    parent.fill(129, 0, 21);
-                    parent.circle(posX, posY, cellSize * 0.6f); // Essen ist kleiner als Schlange
+                    
+                    // 1. Schatten/Glow (etwas größer)
+                    parent.noStroke();
+                    parent.fill(200, 0, 50, 100);
+                    parent.circle(posX, posY, cellSize * 0.7f * sizeModifier);
+
+                    // 2. Apfel-Körper
+                    parent.fill(200, 0, 30);
+                    parent.circle(posX, posY, cellSize * 0.5f * sizeModifier);
+
+                    // 3. Lichtreflex (kleiner weißer Punkt für Glanz)
+                    parent.fill(255, 150);
+                    parent.circle(posX - (cellSize * 0.1f), posY - (cellSize * 0.1f), cellSize * 0.15f);
                 }
             }
         }
