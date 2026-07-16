@@ -15,8 +15,8 @@ public class game {
 
     private final int cellSize = 47;
     private final int gridSize = 18; // Aus deiner Grid.java
-    //private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
-    //private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
+    private final int offsetX = (1000 - (gridSize * cellSize)) / 2;
+    private final int offsetY = (1000 - (gridSize * cellSize)) / 2;
 
     public game(PApplet p) {
         this.controller = new GameController(new Grid());
@@ -28,6 +28,7 @@ public class game {
 
     public void draw() {
         parent.background(0);
+        parent.rectMode(PApplet.CORNER);
         drawGrid(parent.color(0xffa9e53d), parent.color(0xff2fd710), 47, 18, 18);
         drawSnake();
         drawFood();
@@ -39,13 +40,11 @@ public class game {
         }
 
         if (!controller.isRunning()) {
-            main.setState(Main.State.GAMEOVER);
+            main.handleGameOver(controller.getGrid().getScore());
         }
     }
 
     void drawSnake() {
-        int offsetX = getOffsetX();
-        int offsetY = getOffsetY();
         var snake = controller.getGrid().getSnake();
         parent.noStroke();
 
@@ -78,8 +77,6 @@ public class game {
     }
 
     void drawFood(){
-        int offsetX = getOffsetX();
-        int offsetY = getOffsetY();
         var cells = controller.getGrid().getGridSize();
         controller.getGrid().spawn_food();
         for(int py = 0; py < gridSize; py++){
@@ -94,17 +91,8 @@ public class game {
         }
     }
 
-    // Ändere deine Variablen in der gui-Klasse zu dynamischen Methoden
-    public int getOffsetX() {
-        return (parent.width - (gridSize * cellSize)) / 2; // Hier deine Grid-Größe
-    }
-    public int getOffsetY() {
-        return (parent.height - (gridSize * cellSize)) / 2; // Hier deine Grid-Größe
-    }   
 
     void drawGrid(int firstColor, int secondColor, int size, int nx, int ny) {
-    int offsetX = getOffsetX();
-    int offsetY = getOffsetY();
     for (int y = 0; y < ny; y++) {
         for (int x = 0; x < nx; x++) {
             // Wenn x + y gerade ist, Farbe 1, sonst Farbe 2

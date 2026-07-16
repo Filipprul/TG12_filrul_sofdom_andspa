@@ -86,4 +86,8 @@ public class login {
     }
 
     public boolean isLoggedIn() { return loggedIn; }
+
+    public String getCurrentUsername() {
+        return currentUsername;
+    }
 }

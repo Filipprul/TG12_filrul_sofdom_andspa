@@ -30,7 +30,10 @@ public class Main extends PApplet {
         switch (currentState) {
             case LOGIN:
                 loginScreen.draw();
-                if (loginScreen.isLoggedIn()) currentState = State.MENU;
+                if (loginScreen.isLoggedIn()) {
+                    menuScreen.setCurrentUsername(loginScreen.getCurrentUsername());
+                    currentState = State.MENU;
+                }
                 break;
             case MENU:
                 menuScreen.draw();
@@ -73,6 +76,11 @@ public class Main extends PApplet {
     }
 
     public void setState(State state){currentState = state;}
+
+    public void handleGameOver(int score) {
+        menuScreen.addHighscore(loginScreen != null ? loginScreen.getCurrentUsername() : "Spieler", score);
+        currentState = State.GAMEOVER;
+    }
 
     public static void main(String[] args) {PApplet.main("main.Main");}
 }
